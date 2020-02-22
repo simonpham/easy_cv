@@ -11,13 +11,28 @@
   <meta name="apple-mobile-web-app-title" content="dscportal">
   <link rel="apple-touch-icon" href="/icons/Icon-192.png">
 
-  <title>dscportal</title>
+  <title>DSC Portal</title>
   <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyABcGbnuoamR75rqiu_nwnN_h8Iem4hvEo",
+      authDomain: "dscportal.firebaseapp.com",
+      databaseURL: "https://dscportal.firebaseio.com",
+      projectId: "dscportal",
+      storageBucket: "dscportal.appspot.com",
+      messagingSenderId: "1075994372381",
+      appId: "1:1075994372381:web:4327a67af854a193f699f4",
+      measurementId: "G-BF9617RF1X"
+    };
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {

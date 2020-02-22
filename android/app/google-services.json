@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1075994372381",
+    "firebase_url": "https://dscportal.firebaseio.com",
+    "project_id": "dscportal",
+    "storage_bucket": "dscportal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075994372381:android:822ede70b5761ecef699f4",
+        "android_client_info": {
+          "package_name": "dev.simonit.dscportal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075994372381-s80to3i0g9po08usjf8pjeu47dla5dpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv1A8AcGIklwHk4pZS2pGqj71GsZ41akI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075994372381-s80to3i0g9po08usjf8pjeu47dla5dpk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
