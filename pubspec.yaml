@@ -1,5 +1,5 @@
-name: dscportal
-description: Developer Student Clubs Portal
+name: easy_cv
+description: Easy CV
 
 version: 1.0.0+1
 
@@ -22,7 +22,6 @@ dependencies:
   r_flutter: ^0.5.0
 
   # uis
-  responsive_builder: ^0.1.4
   cached_network_image: ^2.0.0
   shimmer: ^1.0.1
 

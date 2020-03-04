@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1075994372381-bmms3rosns4qu8fhmdqde4hn0sq3439l.apps.googleusercontent.com</string>
+	<string>269904920926-h2285gf8mar8p9l6ggmk1k7ieo9st19o.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1075994372381-bmms3rosns4qu8fhmdqde4hn0sq3439l</string>
+	<string>com.googleusercontent.apps.269904920926-h2285gf8mar8p9l6ggmk1k7ieo9st19o</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCni5iFJ6JLCVOKSVI6nA21RahYgesilds</string>
+	<string>AIzaSyAQCQpOd79FhIpK_5GTMys4TBHhInxwUMk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1075994372381</string>
+	<string>269904920926</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>dev.simonit.dscportal</string>
+	<string>dev.simonit.easycv</string>
 	<key>PROJECT_ID</key>
-	<string>dscportal</string>
+	<string>simon-easy-cv</string>
 	<key>STORAGE_BUCKET</key>
-	<string>dscportal.appspot.com</string>
+	<string>simon-easy-cv.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1075994372381:ios:1e59f01b71b16a18f699f4</string>
+	<string>1:269904920926:ios:e2d8443ae971c132688fcf</string>
 	<key>DATABASE_URL</key>
-	<string>https://dscportal.firebaseio.com</string>
+	<string>https://simon-easy-cv.firebaseio.com</string>
 </dict>
 </plist>

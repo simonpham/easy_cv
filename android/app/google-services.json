@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "1075994372381",
-    "firebase_url": "https://dscportal.firebaseio.com",
-    "project_id": "dscportal",
-    "storage_bucket": "dscportal.appspot.com"
+    "project_number": "269904920926",
+    "firebase_url": "https://simon-easy-cv.firebaseio.com",
+    "project_id": "simon-easy-cv",
+    "storage_bucket": "simon-easy-cv.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1075994372381:android:822ede70b5761ecef699f4",
+        "mobilesdk_app_id": "1:269904920926:android:8923812528f52508688fcf",
         "android_client_info": {
-          "package_name": "dev.simonit.dscportal"
+          "package_name": "dev.simonit.easycv"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1075994372381-s80to3i0g9po08usjf8pjeu47dla5dpk.apps.googleusercontent.com",
+          "client_id": "269904920926-fqksks1k5ajja08o2h0761o9favfn8eg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAv1A8AcGIklwHk4pZS2pGqj71GsZ41akI"
+          "current_key": "AIzaSyA-irB1FC1sYoeV2wFyLXgHOwIBBipLc4E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1075994372381-s80to3i0g9po08usjf8pjeu47dla5dpk.apps.googleusercontent.com",
+              "client_id": "269904920926-fqksks1k5ajja08o2h0761o9favfn8eg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "269904920926-h2285gf8mar8p9l6ggmk1k7ieo9st19o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.simonit.easycv"
+              }
             }
           ]
         }
