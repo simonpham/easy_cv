@@ -1,4 +1,4 @@
-package dev.simonit.dscportal
+package dev.simonit.easycv
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
