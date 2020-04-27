@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Developer Student Clubs Portal">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="dscportal">
+  <link rel="apple-touch-icon" href="/icons/Icon-192.png">
+
+  <title>Easy CV</title>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDCmVkwk6XZFrThVGb_ttZfbKRdwiRWrgI",
+      authDomain: "simon-easy-cv.firebaseapp.com",
+      databaseURL: "https://simon-easy-cv.firebaseio.com",
+      projectId: "simon-easy-cv",
+      storageBucket: "simon-easy-cv.appspot.com",
+      messagingSenderId: "269904920926",
+      appId: "1:269904920926:web:37e09a27639567f9688fcf"
+    };
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/flutter_service_worker.js');
+      });
+    }
+  </script>
+  <script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>
