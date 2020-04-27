@@ -20,7 +20,7 @@ class ProfileInfoList extends StatelessWidget {
           showDivider: false,
         ),
         ProfileInfoItem(
-          icon: Icons.email,
+          icon: Icons.place,
           title: user.location,
         ),
         ProfileInfoItem(
