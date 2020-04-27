@@ -1,6 +1,8 @@
+import 'package:easy_cv/models/story.dart';
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/widgets/profile_avatar.dart';
 import 'package:easy_cv/ui/widgets/profile_info_list.dart';
+import 'package:easy_cv/ui/widgets/section_item.dart';
 import 'package:easy_cv/ui/widgets/section_title.dart';
 import 'package:easy_cv/utils/extensions.dart';
 import 'package:easy_cv/view_models/profile_view_model.dart';
@@ -20,7 +22,10 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    profileViewModel.loadProfile(widget.profileName);
+    profileViewModel.loadProfile(widget.profileName).then((_) {
+      profileViewModel.loadExperience();
+      profileViewModel.loadEducation();
+    });
   }
 
   @override
@@ -34,20 +39,22 @@ class _ProfilePageState extends State<ProfilePage> {
             if (model.user == null) {
               return SizedBox();
             }
-            return SingleChildScrollView(
-              child: Container(
-                child: Row(
-                  children: <Widget>[
-                    _buildProfileSummary(
-                      context,
-                      model,
-                    ).wrapWithContainer(maxWidth: 300.0),
-                    _buildSpacer(),
-                    _buildSections(context, model).expand(),
-                  ],
-                ),
-              ).wrapWithContainer(maxWidth: 1024).center(),
-            );
+            return Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildProfileSummary(
+                    context,
+                    model,
+                  ).wrapWithContainer(maxWidth: 300.0),
+                  _buildSpacer(),
+                  SingleChildScrollView(
+                    padding: EdgeInsets.zero,
+                    child: _buildSections(context, model),
+                  ).expand(),
+                ],
+              ),
+            ).wrapWithContainer(maxWidth: 1024).center();
           },
         ),
       ),
@@ -66,10 +73,30 @@ class _ProfilePageState extends State<ProfilePage> {
             fontWeight: FontWeight.w400,
           ),
         ),
-        SectionTitle("Work Experience").addPaddingVertical(3).addMarginTop(),
-        SectionTitle("Education").addPaddingVertical(3).addMarginTop(),
-      ],
-    );
+      ]
+        ..addAll(_getExperienceSection(context, model))
+        ..addAll(_getEducationSection(context, model)),
+    ).addPaddingVertical(3);
+  }
+
+  List<Widget> _getExperienceSection(
+      BuildContext context, ProfileViewModel model) {
+    if (model.experience == null) {
+      return [];
+    }
+    return [
+      SectionTitle("Work Experience").addPaddingVertical(3).addMarginTop(),
+    ]..add(_buildStories(context, model.experience));
+  }
+
+  List<Widget> _getEducationSection(
+      BuildContext context, ProfileViewModel model) {
+    if (model.education == null) {
+      return [];
+    }
+    return [
+      SectionTitle("Education").addPaddingVertical(3).addMarginTop(),
+    ]..add(_buildStories(context, model.education));
   }
 
   Widget _buildProfileSummary(BuildContext context, ProfileViewModel model) {
@@ -104,5 +131,26 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildSpacer() {
     return const SizedBox(width: 64.0);
+  }
+
+  Widget _buildStories(BuildContext context, List<Story> stories) {
+    final List<Widget> items = [];
+    final length = stories.length;
+    for (int position = 0; position < length; position++) {
+      items.add(SectionItem(
+        title: stories[position].title,
+        label: stories[position].label,
+        degree: stories[position].degree,
+        company: stories[position].company,
+        location: stories[position].location,
+        startDate: stories[position].startDate,
+        endDate: stories[position].endDate,
+        isCurrent: stories[position].isCurrent,
+        showDivider: position != 0,
+      ));
+    }
+    return Column(
+      children: items,
+    );
   }
 }
