@@ -1,0 +1,160 @@
+import 'package:easy_cv/utils/extensions.dart';
+import 'package:easy_cv/utils/utils.dart';
+import 'package:flutter/material.dart';
+
+class SectionItem extends StatelessWidget {
+  final String title;
+  final String label;
+  final String degree;
+  final String company;
+  final String location;
+  final int startDate;
+  final int endDate;
+  final bool showDivider;
+  final bool isCurrent;
+
+  const SectionItem({
+    Key key,
+    this.title,
+    this.label,
+    this.degree,
+    this.company,
+    this.location,
+    this.startDate,
+    this.endDate,
+    this.showDivider,
+    this.isCurrent,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: showDivider.ifTrue(
+        getTopDividerDecoration(context),
+        null,
+      ),
+      child: Wrap(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              _buildTitle(context).expand(),
+              _buildLabel(context),
+            ],
+          ),
+          Row(
+            children: <Widget>[]
+              ..addAll(_buildCompany(context))
+              ..addAll(_buildLocation(context))
+              ..add(_buildSpacer())
+              ..addAll(_buildDates(context)),
+          ).addMarginTop(),
+        ],
+      ).addPaddingVertical(3),
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    if (title?.isEmpty ?? true) {
+      return SizedBox();
+    }
+    return Text(
+      title ?? "",
+      style: context.textTheme.headline5.copyWith(
+        color: context.theme.primaryColor.withOpacity(0.87),
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+
+  Widget _buildLabel(BuildContext context) {
+    if (label?.isEmpty ?? true) {
+      return SizedBox();
+    }
+    return Container(
+      decoration: BoxDecoration(
+        color: context.theme.accentColor.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(24.0),
+      ),
+      child: Text(
+        label ?? "",
+        style: context.textTheme.subtitle2.copyWith(
+          color: context.theme.primaryColor.withOpacity(0.87),
+          fontWeight: FontWeight.w500,
+        ),
+      ).addPaddingVertical().addPaddingHorizontal(),
+    );
+  }
+
+  List<Widget> _buildCompany(BuildContext context) {
+    if (company?.isEmpty ?? true) {
+      return [];
+    }
+    return [
+      Icon(
+        Icons.business,
+        color: context.theme.unselectedWidgetColor,
+        size: 20,
+      ),
+      Text(
+        company ?? "",
+        style: context.textTheme.subtitle2.copyWith(
+          color: context.theme.primaryColor.withOpacity(0.87),
+          fontWeight: FontWeight.w500,
+        ),
+      ).addMarginLeft(0.5)
+    ];
+  }
+
+  List<Widget> _buildLocation(BuildContext context) {
+    if (location?.isEmpty ?? true) {
+      return [];
+    }
+    return [
+      Icon(
+        Icons.place,
+        color: context.theme.unselectedWidgetColor,
+        size: 20,
+      ).addMarginLeft(2),
+      Text(
+        location ?? "",
+        style: context.textTheme.subtitle2.copyWith(
+          color: context.theme.primaryColor.withOpacity(0.87),
+          fontWeight: FontWeight.w500,
+        ),
+      ).addMarginLeft(0.5)
+    ];
+  }
+
+  Widget _buildSpacer() {
+    return Container().expand();
+  }
+
+  List<Widget> _buildDates(BuildContext context) {
+    if (startDate == null) {
+      return [];
+    }
+
+    String date = "$startDate".toDate();
+    if (isCurrent == true) {
+      date = "$date - Now";
+    } else {
+      if (endDate != null) {
+        date = "$date - ${endDate.toString().toDate()}";
+      }
+    }
+    return [
+      Icon(
+        Icons.calendar_today,
+        color: context.theme.unselectedWidgetColor,
+        size: 20,
+      ),
+      Text(
+        date ?? "",
+        style: context.textTheme.subtitle2.copyWith(
+          color: context.theme.primaryColor.withOpacity(0.87),
+          fontWeight: FontWeight.w500,
+        ),
+      ).addMarginLeft(0.5)
+    ];
+  }
+}
