@@ -1,0 +1,40 @@
+name: Build and Deploy Web
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    name: Build Web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "beta"
+      - name: Build
+        run: |
+          flutter pub get
+          flutter build web
+      - name: Copying build to docs folder
+        run: |
+          rm -r docs
+          cp -r web ./docs
+          cp -r build/web/* ./docs
+      - name: Commit files
+        run: |
+          remote_repo="https://${GITHUB_ACTOR}:${{secrets.TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          git config --local user.email "simonpham.dn@gmail.com"
+          git config --local user.name "Simon Pham"
+          git remote add publisher "${remote_repo}"
+          git show-ref
+          git branch --verbose
+          git lfs install
+          git remote update
+          git fetch
+          git checkout --track origin/master
+          git add -A
+          git commit -m "feat: deploy new build" || exit 0
+          git pull --rebase publisher master
+          git push publisher master
