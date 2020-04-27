@@ -1,4 +1,5 @@
 import 'package:easy_cv/utils/extensions.dart';
+import 'package:easy_cv/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class ProfileInfoItem extends StatelessWidget {
@@ -20,13 +21,7 @@ class ProfileInfoItem extends StatelessWidget {
     }
     return Container(
       decoration: showDivider.ifTrue(
-        BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: context.theme.unselectedWidgetColor.withOpacity(0.1),
-            ),
-          ),
-        ),
+        getTopDividerDecoration(context),
         null,
       ),
       child: Row(
