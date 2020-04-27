@@ -8,6 +8,8 @@ abstract class InterfaceDscPortalApi {
 
   Future<DscUser> getUser(String uid);
 
+  Future<String> getUidFromUsername(String username);
+
   Future<DscUser> updateUser(FirebaseUser user, String name, String username);
 
   Future<void> signOut();

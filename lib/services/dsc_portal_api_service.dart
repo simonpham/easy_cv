@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:easy_cv/interfaces/dsc_portal_api_interface.dart';
 import 'package:easy_cv/models/dsc_user.dart';
 import 'package:easy_cv/singleton_instances.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DscPortalApiService implements InterfaceDscPortalApi {
   final _endpoint = "https://api.app/";
@@ -63,5 +63,12 @@ class DscPortalApiService implements InterfaceDscPortalApi {
   Future<DscUser> getUser(String uid) async {
     final CollectionReference ref = firestore.collection('users');
     return DscUser.fromMap((await ref.document(uid).get()).data);
+  }
+
+  @override
+  Future<String> getUidFromUsername(String username) async {
+    final snapshot =
+        await firestore.collection('user_urls').document(username).get();
+    return snapshot.data['uid'];
   }
 }
