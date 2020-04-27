@@ -1,7 +1,7 @@
+import 'package:easy_cv/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:easy_cv/utils/string_utils.dart';
-
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart' as url;
 
 extension StringExtension on String {
@@ -13,6 +13,12 @@ extension StringExtension on String {
     if (await url.canLaunch(this)) {
       return url.launch(this);
     }
+  }
+
+  String toDate() {
+    return DateFormat("MMM dd, yyyy").format(
+      DateTime.fromMillisecondsSinceEpoch(int.parse(this)),
+    );
   }
 }
 
