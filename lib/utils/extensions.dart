@@ -77,7 +77,8 @@ extension ExtendedContext on BuildContext {
   }
 
   bool pop([result]) {
-    return Navigator.of(this).pop(result);
+    Navigator.of(this).pop(result);
+    return result;
   }
 
   Future showAlertDialog({String title, @required String message}) {

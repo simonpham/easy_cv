@@ -1,11 +1,11 @@
 {
-    "name": "dscportal",
-    "short_name": "dscportal",
+    "name": "dsceasycv",
+    "short_name": "dsceasycv",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Developer Student Clubs Portal",
+    "description": "Developer Student Clubs Easy CV",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
