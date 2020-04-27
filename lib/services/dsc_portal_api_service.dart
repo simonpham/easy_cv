@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_cv/interfaces/dsc_portal_api_interface.dart';
 import 'package:easy_cv/models/dsc_user.dart';
+import 'package:easy_cv/models/story.dart';
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -70,5 +71,43 @@ class DscPortalApiService implements InterfaceDscPortalApi {
     final snapshot =
         await firestore.collection('user_urls').document(username).get();
     return snapshot.data['uid'];
+  }
+
+  @override
+  Future<List<Story>> getUserExperience(String uid) async {
+    final snapshot =
+        await firestore.collection('users/$uid/experience').getDocuments();
+    final List<Story> items = [];
+    snapshot.documents.forEach((element) {
+      final item = Story.fromMap(element.data);
+
+      if (items.isNotEmpty && items.first.startDate < item.startDate) {
+        items.insert(0, item);
+      } else {
+        items.add(
+          item,
+        );
+      }
+    });
+    return items;
+  }
+
+  @override
+  Future<List<Story>> getUserEducation(String uid) async {
+    final snapshot =
+        await firestore.collection('users/$uid/education').getDocuments();
+    final List<Story> items = [];
+    snapshot.documents.forEach((element) {
+      final item = Story.fromMap(element.data);
+
+      if (items.isNotEmpty && items.first.startDate > item.startDate) {
+        items.insert(0, item);
+      } else {
+        items.add(
+          item,
+        );
+      }
+    });
+    return items;
   }
 }

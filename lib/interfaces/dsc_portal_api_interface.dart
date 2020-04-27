@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:easy_cv/models/dsc_user.dart';
+import 'package:easy_cv/models/story.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class InterfaceDscPortalApi {
   Future<AuthResult> signInWithEmailPassword(String email, String password);
@@ -11,6 +12,10 @@ abstract class InterfaceDscPortalApi {
   Future<String> getUidFromUsername(String username);
 
   Future<DscUser> updateUser(FirebaseUser user, String name, String username);
+
+  Future<List<Story>> getUserExperience(String uid);
+
+  Future<List<Story>> getUserEducation(String uid);
 
   Future<void> signOut();
 }
