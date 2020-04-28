@@ -5,9 +5,12 @@ class BeginViewModel extends Model {
   BeginViewModel() {
     mainPageController = PageController();
     firstNameTextController = TextEditingController();
+    lastNameTextController = TextEditingController();
+    locationTextController = TextEditingController();
     currentPage = 0;
     firstName = "";
     lastName = "";
+    location = "";
   }
 
   PageController _mainPageController;
@@ -28,6 +31,7 @@ class BeginViewModel extends Model {
     notifyListeners();
   }
 
+  /// First name
   TextEditingController _firstNameTextController;
 
   TextEditingController get firstNameTextController => _firstNameTextController;
@@ -46,6 +50,7 @@ class BeginViewModel extends Model {
     notifyListeners();
   }
 
+  /// Last name
   TextEditingController _lastNameTextController;
 
   TextEditingController get lastNameTextController => _lastNameTextController;
@@ -61,6 +66,25 @@ class BeginViewModel extends Model {
 
   set lastName(String value) {
     _lastName = value;
+    notifyListeners();
+  }
+
+  /// Location
+  TextEditingController _locationTextController;
+
+  TextEditingController get locationTextController => _locationTextController;
+
+  set locationTextController(TextEditingController value) {
+    _locationTextController = value;
+    notifyListeners();
+  }
+
+  String _location;
+
+  String get location => _location;
+
+  set location(String value) {
+    _location = value;
     notifyListeners();
   }
 }

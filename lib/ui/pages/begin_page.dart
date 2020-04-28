@@ -17,6 +17,7 @@ class BeginPage extends StatelessWidget {
             final _pages = [
               Welcome(model),
               PageName(model),
+              PageLocation(model),
             ];
             return Stack(
               children: <Widget>[
@@ -91,6 +92,7 @@ class Welcome extends StatelessWidget {
     return Container(
       color: Colors.deepPurple,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
             "Hi there,\nI'm Resumey",
@@ -157,6 +159,7 @@ class PageName extends StatelessWidget {
     return Container(
       color: Colors.deepPurple,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             "Nice to meet you! What do your friends call you?",
@@ -215,6 +218,59 @@ class PageName extends StatelessWidget {
             maxLengthEnforced: true,
             onChanged: (text) =>
                 model.lastName = model.lastNameTextController.text,
+          ).addMarginTop(),
+          Container().expand(),
+        ],
+      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
+    );
+  }
+}
+
+class PageLocation extends StatelessWidget {
+  final BeginViewModel model;
+
+  const PageLocation(this.model, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const _maxNameLength = 32;
+    return Container(
+      color: Colors.deepPurple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Where do you live?",
+            style: context.textTheme.headline5.copyWith(
+              color: Colors.white.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+          ).addMarginTop(),
+          Container().expand(),
+          TextField(
+            controller: model.locationTextController,
+            decoration: InputDecoration(
+              hintText: "I'm living at..",
+              errorText: "YOUR CURRENT LOCATION",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.location?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+                model.location = model.locationTextController.text,
           ).addMarginTop(),
           Container().expand(),
         ],
