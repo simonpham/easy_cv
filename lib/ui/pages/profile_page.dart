@@ -85,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
       return [];
     }
     return [
-      SectionTitle("Work Experience").addPaddingVertical(3).addMarginTop(),
+      SectionTitle("Work Experience").addMarginTop(5),
     ]..add(_buildStories(context, model.experience));
   }
 
@@ -95,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
       return [];
     }
     return [
-      SectionTitle("Education").addPaddingVertical(3).addMarginTop(),
+      SectionTitle("Education").addMarginTop(5),
     ]..add(_buildStories(context, model.education));
   }
 
