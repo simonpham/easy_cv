@@ -45,7 +45,7 @@ extension ExtendedPageController on PageController {
   Future<void> goTo(int page) {
     return this.animateToPage(
       page,
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 600),
       curve: Curves.easeOut,
     );
   }
