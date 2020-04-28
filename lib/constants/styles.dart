@@ -1,3 +1,4 @@
+import 'package:easy_cv/assets.dart';
 import 'package:flutter/material.dart';
 
 final ThemeData appTheme = ThemeData(
@@ -5,6 +6,7 @@ final ThemeData appTheme = ThemeData(
   scaffoldBackgroundColor: const Color.fromRGBO(250, 250, 250, 1.0),
   primarySwatch: Colors.blue,
   primaryColor: Color(0xff304080),
+  fontFamily: Fonts.raleway,
   inputDecorationTheme: inputDecorationTheme,
   cardTheme: cardTheme,
   buttonTheme: buttonTheme,
@@ -17,6 +19,7 @@ final ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   primarySwatch: Colors.blue,
   primaryColor: Color(0xff304080),
+  fontFamily: Fonts.raleway,
   inputDecorationTheme: inputDecorationTheme,
   cardTheme: cardTheme.copyWith(color: Colors.black),
   buttonTheme: buttonTheme,

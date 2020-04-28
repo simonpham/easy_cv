@@ -39,3 +39,12 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  fonts:
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/raleway_regular.otf
+        - asset: assets/fonts/raleway_italic.otf
+          style: italic
+        - asset: assets/fonts/raleway_bold.otf
+          weight: 700
