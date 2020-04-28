@@ -8,6 +8,7 @@ class SectionItem extends StatelessWidget {
   final String degree;
   final String company;
   final String location;
+  final String summary;
   final int startDate;
   final int endDate;
   final bool showDivider;
@@ -20,6 +21,7 @@ class SectionItem extends StatelessWidget {
     this.degree,
     this.company,
     this.location,
+    this.summary,
     this.startDate,
     this.endDate,
     this.showDivider,
@@ -48,6 +50,7 @@ class SectionItem extends StatelessWidget {
               ..add(_buildSpacer())
               ..addAll(_buildDates(context)),
           ).addMarginTop(),
+          _buildSummary(context),
         ],
       ).addPaddingVertical(3),
     );
@@ -156,5 +159,22 @@ class SectionItem extends StatelessWidget {
         ),
       ).addMarginLeft(0.5)
     ];
+  }
+
+  Widget _buildSummary(BuildContext context) {
+    if (summary?.isEmpty ?? true) {
+      return SizedBox();
+    }
+    return Row(
+      children: <Widget>[
+        Text(
+          summary ?? "",
+          style: context.textTheme.subtitle2.copyWith(
+            color: context.theme.primaryColor.withOpacity(0.87),
+            fontWeight: FontWeight.w400,
+          ),
+        ).expand(),
+      ],
+    ).addMarginTop();
   }
 }

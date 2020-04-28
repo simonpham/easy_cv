@@ -143,6 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
         degree: stories[position].degree,
         company: stories[position].company,
         location: stories[position].location,
+        summary: stories[position].summary,
         startDate: stories[position].startDate,
         endDate: stories[position].endDate,
         isCurrent: stories[position].isCurrent,

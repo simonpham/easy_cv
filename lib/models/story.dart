@@ -4,6 +4,7 @@ class Story {
   String degree;
   String company;
   String location;
+  String summary;
   int startDate;
   int endDate;
   bool isCurrent;
@@ -14,6 +15,7 @@ class Story {
     this.degree,
     this.company,
     this.location,
+    this.summary,
     this.startDate,
     this.endDate,
     this.isCurrent,
@@ -26,6 +28,7 @@ class Story {
     company = map['company'];
     location = map['location'];
     company = map['company'];
+    summary = map['summary'];
     isCurrent = map['is_current'];
     startDate = map['start_date'];
     endDate = map['end_date'];
