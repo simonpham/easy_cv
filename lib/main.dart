@@ -1,5 +1,6 @@
 import 'package:easy_cv/constants/styles.dart';
 import 'package:easy_cv/singleton_instances.dart';
+import 'package:easy_cv/ui/pages/begin_page.dart';
 import 'package:easy_cv/ui/pages/home_page.dart';
 import 'package:easy_cv/ui/pages/profile_page.dart';
 import 'package:easy_cv/ui/pages/sign_in_page.dart';
@@ -31,8 +32,7 @@ class EasyCv extends StatelessWidget {
           theme: appTheme,
           darkTheme: darkTheme,
           routes: {
-            "/": (_) => ProfilePage(profileName: "simon"),
-//            "/": (_) => BeginPage(),
+            "/": (_) => BeginPage(),
             HomePage.routeName: (_) => HomePage(),
             SignUpPage.routeName: (_) => SignUpPage(),
             SignInPage.routeName: (_) => SignInPage(),
