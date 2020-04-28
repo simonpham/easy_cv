@@ -3,14 +3,16 @@ import 'package:scoped_model/scoped_model.dart';
 
 class BeginViewModel extends Model {
   BeginViewModel() {
+    currentPage = 0;
     mainPageController = PageController();
     firstNameTextController = TextEditingController();
     lastNameTextController = TextEditingController();
     locationTextController = TextEditingController();
-    currentPage = 0;
+    emailTextController = TextEditingController();
     firstName = "";
     lastName = "";
     location = "";
+    email = "";
   }
 
   PageController _mainPageController;
@@ -85,6 +87,25 @@ class BeginViewModel extends Model {
 
   set location(String value) {
     _location = value;
+    notifyListeners();
+  }
+
+  /// Email
+  TextEditingController _emailTextController;
+
+  TextEditingController get emailTextController => _emailTextController;
+
+  set emailTextController(TextEditingController value) {
+    _emailTextController = value;
+    notifyListeners();
+  }
+
+  String _email;
+
+  String get email => _email;
+
+  set email(String value) {
+    _email = value;
     notifyListeners();
   }
 }

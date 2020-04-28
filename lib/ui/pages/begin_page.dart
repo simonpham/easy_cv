@@ -18,6 +18,7 @@ class BeginPage extends StatelessWidget {
               Welcome(model),
               PageName(model),
               PageLocation(model),
+              PageEmail(model),
             ];
             return Stack(
               children: <Widget>[
@@ -270,7 +271,60 @@ class PageLocation extends StatelessWidget {
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
             onChanged: (text) =>
-                model.location = model.locationTextController.text,
+            model.location = model.locationTextController.text,
+          ).addMarginTop(),
+          Container().expand(),
+        ],
+      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
+    );
+  }
+}
+
+class PageEmail extends StatelessWidget {
+  final BeginViewModel model;
+
+  const PageEmail(this.model, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const _maxNameLength = 32;
+    return Container(
+      color: Colors.deepPurple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "What's your email address?",
+            style: context.textTheme.headline5.copyWith(
+              color: Colors.white.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+          ).addMarginTop(),
+          Container().expand(),
+          TextField(
+            controller: model.locationTextController,
+            decoration: InputDecoration(
+              hintText: "My email address is..",
+              errorText: "YOUR EMAIL ADDRESS",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.location?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+            model.location = model.locationTextController.text,
           ).addMarginTop(),
           Container().expand(),
         ],
