@@ -28,7 +28,7 @@ class ProfileInfoItem extends StatelessWidget {
         children: <Widget>[
           Icon(
             icon,
-            color: context.theme.unselectedWidgetColor,
+            color: context.theme.unselectedWidgetColor.withOpacity(0.5),
             size: 20,
           ),
           Text(

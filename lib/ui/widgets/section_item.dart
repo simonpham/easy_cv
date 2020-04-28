@@ -95,13 +95,13 @@ class SectionItem extends StatelessWidget {
     return [
       Icon(
         Icons.business,
-        color: context.theme.unselectedWidgetColor,
+        color: context.theme.unselectedWidgetColor.withOpacity(0.45),
         size: 20,
       ),
       Text(
         company ?? "",
         style: context.textTheme.subtitle2.copyWith(
-          color: context.theme.primaryColor.withOpacity(0.87),
+          color: context.theme.unselectedWidgetColor.withOpacity(0.45),
           fontWeight: FontWeight.w500,
         ),
       ).addMarginLeft(0.5)
@@ -115,13 +115,13 @@ class SectionItem extends StatelessWidget {
     return [
       Icon(
         Icons.place,
-        color: context.theme.unselectedWidgetColor,
+        color: context.theme.unselectedWidgetColor.withOpacity(0.45),
         size: 20,
       ).addMarginLeft(2),
       Text(
         location ?? "",
         style: context.textTheme.subtitle2.copyWith(
-          color: context.theme.primaryColor.withOpacity(0.87),
+          color: context.theme.unselectedWidgetColor.withOpacity(0.45),
           fontWeight: FontWeight.w500,
         ),
       ).addMarginLeft(0.5)
@@ -148,13 +148,13 @@ class SectionItem extends StatelessWidget {
     return [
       Icon(
         Icons.calendar_today,
-        color: context.theme.unselectedWidgetColor,
+        color: context.theme.unselectedWidgetColor.withOpacity(0.45),
         size: 20,
       ),
       Text(
         date ?? "",
         style: context.textTheme.subtitle2.copyWith(
-          color: context.theme.primaryColor.withOpacity(0.87),
+          color: context.theme.unselectedWidgetColor.withOpacity(0.45),
           fontWeight: FontWeight.w500,
         ),
       ).addMarginLeft(0.5)

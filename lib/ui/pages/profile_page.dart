@@ -119,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
           "${model.user.bio}",
           style: context.textTheme.headline6.copyWith(
             color: context.theme.primaryColor.withOpacity(0.87),
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w400,
           ),
         ).addMarginTop(),
         ProfileInfoList(
