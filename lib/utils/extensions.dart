@@ -218,4 +218,10 @@ extension ExtendedWidget on Widget {
       child: this,
     );
   }
+
+  Widget wrapSafeArea() {
+    return SafeArea(
+      child: this,
+    );
+  }
 }

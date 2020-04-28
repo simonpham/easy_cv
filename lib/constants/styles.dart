@@ -29,10 +29,7 @@ final ThemeData darkTheme = ThemeData(
 
 final inputDecorationTheme = InputDecorationTheme(
   contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
-  border: OutlineInputBorder(
-    borderSide: const BorderSide(color: Colors.indigo),
-    borderRadius: BorderRadius.circular(36.0),
-  ),
+  border: InputBorder.none,
 );
 
 final cardTheme = CardTheme(
