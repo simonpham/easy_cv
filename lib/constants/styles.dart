@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 final ThemeData appTheme = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: const Color.fromRGBO(250, 250, 250, 1.0),
-  primarySwatch: Colors.blue,
+  primarySwatch: Colors.indigo,
   primaryColor: Color(0xff304080),
   fontFamily: Fonts.raleway,
   inputDecorationTheme: inputDecorationTheme,
@@ -17,7 +17,7 @@ final ThemeData appTheme = ThemeData(
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: Colors.black,
-  primarySwatch: Colors.blue,
+  primarySwatch: Colors.indigo,
   primaryColor: Color(0xff304080),
   fontFamily: Fonts.raleway,
   inputDecorationTheme: inputDecorationTheme,
@@ -40,7 +40,8 @@ final cardTheme = CardTheme(
 );
 
 final buttonTheme = ButtonThemeData(
-  height: 44.0,
-  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.0)),
+  buttonColor: Colors.white,
+  height: 56.0,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.0)),
   textTheme: ButtonTextTheme.primary,
 );
