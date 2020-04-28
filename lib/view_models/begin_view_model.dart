@@ -5,6 +5,9 @@ class BeginViewModel extends Model {
   BeginViewModel() {
     mainPageController = PageController();
     firstNameTextController = TextEditingController();
+    currentPage = 0;
+    firstName = "";
+    lastName = "";
   }
 
   PageController _mainPageController;
@@ -13,6 +16,15 @@ class BeginViewModel extends Model {
 
   set mainPageController(PageController value) {
     _mainPageController = value;
+    notifyListeners();
+  }
+
+  int _currentPage;
+
+  int get currentPage => _currentPage;
+
+  set currentPage(int value) {
+    _currentPage = value;
     notifyListeners();
   }
 

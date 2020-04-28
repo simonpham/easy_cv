@@ -182,6 +182,13 @@ extension ExtendedWidget on Widget {
     );
   }
 
+  Widget addPadding([num factor = 1]) {
+    return Container(
+      margin: EdgeInsets.all(8.0 * factor),
+      child: this,
+    );
+  }
+
   Widget center() {
     return Center(
       child: this,
@@ -221,6 +228,13 @@ extension ExtendedWidget on Widget {
 
   Widget wrapSafeArea() {
     return SafeArea(
+      child: this,
+    );
+  }
+
+  Widget align(Alignment align) {
+    return Container(
+      alignment: align,
       child: this,
     );
   }

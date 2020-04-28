@@ -1,5 +1,6 @@
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/pages/sign_in_page.dart';
+import 'package:easy_cv/ui/widgets/tappable.dart';
 import 'package:easy_cv/utils/extensions.dart';
 import 'package:easy_cv/view_models/begin_view_model.dart';
 import 'package:flutter/material.dart';
@@ -13,19 +14,70 @@ class BeginPage extends StatelessWidget {
         model: beginViewModel,
         child: ScopedModelDescendant(
           builder: (BuildContext context, _, BeginViewModel model) {
-            return PageView(
-              controller: model.mainPageController,
-              physics: NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
+            final _pages = [
+              Welcome(model),
+              PageName(model),
+            ];
+            return Stack(
               children: <Widget>[
-                Welcome(model),
-                PageName(model),
+                Positioned.fill(
+                  child: PageView(
+                    controller: model.mainPageController,
+                    physics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    children: _pages,
+                    onPageChanged: (page) => model.currentPage = page,
+                  ),
+                ),
+                Positioned(
+                  right: 0.0,
+                  bottom: 0.0,
+                  child: _buildNavigateButtons(context, model, _pages),
+                ),
               ],
             );
           },
         ),
       ),
     );
+  }
+
+  Widget _buildNavigateButtons(
+      BuildContext context, BeginViewModel model, List<StatelessWidget> pages) {
+    final currentPage = model.currentPage;
+    if (currentPage == 0) {
+      return SizedBox();
+    }
+    return Column(
+      children: <Widget>[
+        Tappable(
+          onTap: () {
+            final previousPage = currentPage - 1;
+            if (previousPage >= 0) {
+              model.mainPageController.goTo(previousPage);
+            }
+          },
+          child: Icon(
+            Icons.keyboard_arrow_up,
+            size: 30,
+            color: Colors.white,
+          ).addPadding(),
+        ),
+        Tappable(
+          onTap: () {
+            final nextPage = currentPage + 1;
+            if (nextPage < pages.length) {
+              model.mainPageController.goTo(nextPage);
+            }
+          },
+          child: Icon(
+            Icons.keyboard_arrow_down,
+            size: 30,
+            color: Colors.white,
+          ).addPadding(),
+        ).addMarginTop(1),
+      ],
+    ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea();
   }
 }
 
@@ -136,7 +188,8 @@ class PageName extends StatelessWidget {
             ),
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
-            onChanged: (text) => model.firstName = model.firstNameTextController.text,
+            onChanged: (text) =>
+                model.firstName = model.firstNameTextController.text,
           ).addMarginTop(),
           TextField(
             controller: model.lastNameTextController,
@@ -160,7 +213,8 @@ class PageName extends StatelessWidget {
             ),
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
-            onChanged: (text) => model.lastName = model.lastNameTextController.text,
+            onChanged: (text) =>
+                model.lastName = model.lastNameTextController.text,
           ).addMarginTop(),
           Container().expand(),
         ],
