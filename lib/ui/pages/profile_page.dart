@@ -7,6 +7,7 @@ import 'package:easy_cv/ui/widgets/section_title.dart';
 import 'package:easy_cv/utils/extensions.dart';
 import 'package:easy_cv/view_models/profile_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -39,22 +40,39 @@ class _ProfilePageState extends State<ProfilePage> {
             if (model.user == null) {
               return SizedBox();
             }
-            return Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _buildProfileSummary(
-                    context,
-                    model,
-                  ).wrapWithContainer(maxWidth: 300.0),
-                  _buildSpacer(),
-                  SingleChildScrollView(
-                    padding: EdgeInsets.zero,
-                    child: _buildSections(context, model),
-                  ).expand(),
-                ],
-              ),
-            ).wrapWithContainer(maxWidth: 1024).center();
+            return ResponsiveBuilder(
+              builder: (BuildContext context, SizingInformation sizeInfo) {
+                if (sizeInfo.isMobile) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        _buildProfileSummary(
+                          context,
+                          model,
+                        ),
+                        _buildSections(context, model),
+                      ],
+                    ).wrapWithContainer(maxWidth: sizeInfo.screenSize.width),
+                  );
+                }
+                return Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      _buildProfileSummary(
+                        context,
+                        model,
+                      ).wrapWithContainer(maxWidth: 300.0),
+                      _buildSpacer(sizeInfo),
+                      SingleChildScrollView(
+                        padding: EdgeInsets.zero,
+                        child: _buildSections(context, model),
+                      ).expand(),
+                    ],
+                  ),
+                ).wrapWithContainer(maxWidth: 1024).center();
+              },
+            );
           },
         ),
       ),
@@ -129,7 +147,10 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildSpacer() {
+  Widget _buildSpacer(SizingInformation sizeInfo) {
+    if (sizeInfo.isTablet) {
+      return const SizedBox(width: 16.0);
+    }
     return const SizedBox(width: 64.0);
   }
 
