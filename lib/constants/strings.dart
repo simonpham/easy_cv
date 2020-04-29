@@ -1,4 +1,4 @@
-const String appName = "DSC Portal";
+const String appName = "DSC Easy CV";
 
 /// define constants in alphabetical order
 const String aboutTitle = "About";

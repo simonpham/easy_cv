@@ -1,7 +1,9 @@
+import 'package:easy_cv/constants/strings.dart';
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/pages/sign_in_page.dart';
 import 'package:easy_cv/ui/widgets/tappable.dart';
 import 'package:easy_cv/utils/extensions.dart';
+import 'package:easy_cv/utils/string_utils.dart';
 import 'package:easy_cv/view_models/begin_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -60,6 +62,49 @@ class BeginPage extends StatelessWidget {
     if (currentPage == 0 || currentPage == pages.length - 1) {
       return SizedBox();
     }
+    bool isNextEnable = true;
+    switch (currentPage) {
+      case 1:
+        if (model.firstName.isEmpty || model.lastName.isEmpty) {
+          isNextEnable = false;
+        }
+        break;
+      case 2:
+        if (model.location.isEmpty) {
+          isNextEnable = false;
+        }
+        break;
+      case 3:
+        if (model.email.isEmpty) {
+          isNextEnable = false;
+        }
+        break;
+      case 4:
+        if (model.bio.isEmpty) {
+          isNextEnable = false;
+        }
+        break;
+      case 5:
+        if (model.school.isEmpty || model.major.isEmpty) {
+          isNextEnable = false;
+        }
+        break;
+      case 6:
+        if (model.company.isEmpty ||
+            model.position.isEmpty ||
+            model.companyLocation.isEmpty) {
+          isNextEnable = false;
+        }
+        break;
+      case 7:
+        if (model.username.isEmpty ||
+            !model.username.validate(RegexUtils.username)) {
+          isNextEnable = false;
+        }
+        break;
+      default:
+        break;
+    }
     return Column(
       children: <Widget>[
         Tappable(
@@ -77,6 +122,13 @@ class BeginPage extends StatelessWidget {
         ),
         Tappable(
           onTap: () {
+            if (!isNextEnable) {
+              context.showAlertDialog(
+                title: invalidInputTitle,
+                message: "Please check your input and try again!",
+              );
+              return;
+            }
             final nextPage = currentPage + 1;
             if (nextPage == lastPage) {
               // TODO: show dialog - can't go back
@@ -701,18 +753,19 @@ class PagePassword extends StatelessWidget {
                 ),
                 onPressed: () {
                   context.showAlertDialog(
-                      message: "Are you sure to sign up?",
-                      yesAction: () {
-                        appViewModel.signUp(
-                          model.email,
-                          model.password,
-                          model.firstName,
-                          model.lastName,
-                          model.location,
-                          model.bio,
-                          model.username,
-                        );
-                      });
+                    message: "Are you sure to sign up?",
+                    yesAction: () {
+                      appViewModel.signUp(
+                        model.email,
+                        model.password,
+                        model.firstName,
+                        model.lastName,
+                        model.location,
+                        model.bio,
+                        model.username,
+                      );
+                    },
+                  );
                 },
               ).expand()
             ],
