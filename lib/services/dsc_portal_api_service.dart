@@ -46,6 +46,7 @@ class DscPortalApiService implements InterfaceDscPortalApi {
   ) async {
     final CollectionReference ref = firestore.collection('users');
 
+    /// Update user basic info.
     final newData = {
       'uid': user.uid,
       'profile_pic_url': user.photoUrl ?? "",
@@ -57,6 +58,11 @@ class DscPortalApiService implements InterfaceDscPortalApi {
       'bio': bio,
     };
     await ref.document(user.uid).setData(newData, merge: true);
+
+    /// Update CV url
+    await firestore.collection('user_urls').document(username).setData({
+      "uid": user.uid,
+    });
 
     return getUser(user.uid);
   }
