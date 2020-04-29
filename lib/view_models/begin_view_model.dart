@@ -10,11 +10,15 @@ class BeginViewModel extends Model {
     locationTextController = TextEditingController();
     emailTextController = TextEditingController();
     bioTextController = TextEditingController();
+    usernameTextController = TextEditingController();
+    passwordTextController = TextEditingController();
     firstName = "";
     lastName = "";
     location = "";
     email = "";
     bio = "";
+    username = "";
+    password = "";
   }
 
   PageController _mainPageController;
@@ -127,6 +131,44 @@ class BeginViewModel extends Model {
 
   set bio(String value) {
     _bio = value;
+    notifyListeners();
+  }
+
+  /// Username
+  TextEditingController _usernameTextController;
+
+  TextEditingController get usernameTextController => _usernameTextController;
+
+  set usernameTextController(TextEditingController value) {
+    _usernameTextController = value;
+    notifyListeners();
+  }
+
+  String _username;
+
+  String get username => _username;
+
+  set username(String value) {
+    _username = value;
+    notifyListeners();
+  }
+
+  /// Password
+  TextEditingController _passwordTextController;
+
+  TextEditingController get passwordTextController => _passwordTextController;
+
+  set passwordTextController(TextEditingController value) {
+    _passwordTextController = value;
+    notifyListeners();
+  }
+
+  String _password;
+
+  String get password => _password;
+
+  set password(String value) {
+    _password = value;
     notifyListeners();
   }
 }
