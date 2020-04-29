@@ -23,7 +23,7 @@ class BeginPage extends StatelessWidget {
               PageEmail(model),
               PageBio(model),
               PageEducation(model),
-//              PageExperience(model),
+              PageExperience(model),
               PageUsername(model),
               PagePassword(model),
             ];
@@ -577,6 +577,110 @@ class PageEducation extends StatelessWidget {
             maxLengthEnforced: true,
             onChanged: (text) =>
             model.major = model.majorTextController.text,
+          ).addMarginTop(),
+          Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
+        ],
+      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
+    );
+  }
+}
+
+class PageExperience extends StatelessWidget {
+  final BeginViewModel model;
+
+  const PageExperience(this.model, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const _maxNameLength = 32;
+    return Container(
+      color: Colors.deepPurple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Add a workplace",
+            style: context.textTheme.headline5.copyWith(
+              color: Colors.white.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+          ).addMarginTop(),
+          Container().expand(),
+          TextField(
+            controller: model.companyTextController,
+            decoration: InputDecoration(
+              hintText: "Where have you worked?",
+              errorText: "YOUR COMPANY",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.company?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+            model.company = model.companyTextController.text,
+          ).addMarginTop(),
+          TextField(
+            controller: model.positionTextController,
+            decoration: InputDecoration(
+              hintText: "What is your job title?",
+              errorText: "YOUR POSITION",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.position?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+            model.position = model.positionTextController.text,
+          ).addMarginTop(),
+          TextField(
+            controller: model.companyLocationTextController,
+            decoration: InputDecoration(
+              hintText: "My company is located in..",
+              errorText: "YOUR COMPANY'S LOCATION",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.companyLocation?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+            model.companyLocation = model.companyLocationTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),

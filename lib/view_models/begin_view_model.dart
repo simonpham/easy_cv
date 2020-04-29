@@ -14,6 +14,9 @@ class BeginViewModel extends Model {
     passwordTextController = TextEditingController();
     schoolTextController = TextEditingController();
     majorTextController = TextEditingController();
+    companyTextController = TextEditingController();
+    positionTextController = TextEditingController();
+    companyLocationTextController = TextEditingController();
     firstName = "";
     lastName = "";
     location = "";
@@ -23,6 +26,9 @@ class BeginViewModel extends Model {
     password = "";
     school = "";
     major = "";
+    company = "";
+    position = "";
+    companyLocation = "";
   }
 
   PageController _mainPageController;
@@ -211,6 +217,63 @@ class BeginViewModel extends Model {
 
   set major(String value) {
     _major = value;
+    notifyListeners();
+  }
+
+  /// Company
+  TextEditingController _companyTextController;
+
+  TextEditingController get companyTextController => _companyTextController;
+
+  set companyTextController(TextEditingController value) {
+    _companyTextController = value;
+    notifyListeners();
+  }
+
+  String _company;
+
+  String get company => _company;
+
+  set company(String value) {
+    _company = value;
+    notifyListeners();
+  }
+
+  /// Position
+  TextEditingController _positionTextController;
+
+  TextEditingController get positionTextController => _positionTextController;
+
+  set positionTextController(TextEditingController value) {
+    _positionTextController = value;
+    notifyListeners();
+  }
+
+  String _position;
+
+  String get position => _position;
+
+  set position(String value) {
+    _position = value;
+    notifyListeners();
+  }
+
+  /// Company location
+  TextEditingController _companyLocationTextController;
+
+  TextEditingController get companyLocationTextController => _companyLocationTextController;
+
+  set companyLocationTextController(TextEditingController value) {
+    _companyLocationTextController = value;
+    notifyListeners();
+  }
+
+  String _companyLocation;
+
+  String get companyLocation => _companyLocation;
+
+  set companyLocation(String value) {
+    _companyLocation = value;
     notifyListeners();
   }
 }
