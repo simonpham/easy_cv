@@ -22,6 +22,8 @@ class BeginPage extends StatelessWidget {
               PageLocation(model),
               PageEmail(model),
               PageBio(model),
+              PageEducation(model),
+//              PageExperience(model),
               PageUsername(model),
               PagePassword(model),
             ];
@@ -309,14 +311,14 @@ class PageEmail extends StatelessWidget {
           ).addMarginTop(),
           Container().expand(),
           TextField(
-            controller: model.locationTextController,
+            controller: model.emailTextController,
             decoration: InputDecoration(
               hintText: "My email address is..",
               errorText: "YOUR EMAIL ADDRESS",
               errorStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
-              counterText: "${model.location?.length ?? 0}/$_maxNameLength",
+              counterText: "${model.email?.length ?? 0}/$_maxNameLength",
               counterStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
@@ -331,7 +333,7 @@ class PageEmail extends StatelessWidget {
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
             onChanged: (text) =>
-            model.location = model.locationTextController.text,
+            model.email = model.emailTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
@@ -370,7 +372,7 @@ class PageBio extends StatelessWidget {
               errorStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
-              counterText: "${model.location?.length ?? 0}/$_maxNameLength",
+              counterText: "${model.bio?.length ?? 0}/$_maxNameLength",
               counterStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
@@ -424,7 +426,7 @@ class PageUsername extends StatelessWidget {
               errorStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
-              counterText: "${model.location?.length ?? 0}/$_maxNameLength",
+              counterText: "${model.username?.length ?? 0}/$_maxNameLength",
               counterStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
@@ -480,7 +482,7 @@ class PagePassword extends StatelessWidget {
               errorStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
-              counterText: "${model.location?.length ?? 0}/$_maxNameLength",
+              counterText: "${model.password?.length ?? 0}/$_maxNameLength",
               counterStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
@@ -496,6 +498,85 @@ class PagePassword extends StatelessWidget {
             maxLengthEnforced: true,
             onChanged: (text) =>
             model.password = model.passwordTextController.text,
+          ).addMarginTop(),
+          Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
+        ],
+      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
+    );
+  }
+}
+
+class PageEducation extends StatelessWidget {
+  final BeginViewModel model;
+
+  const PageEducation(this.model, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const _maxNameLength = 32;
+    return Container(
+      color: Colors.deepPurple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Add a college",
+            style: context.textTheme.headline5.copyWith(
+              color: Colors.white.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+          ).addMarginTop(),
+          Container().expand(),
+          TextField(
+            controller: model.schoolTextController,
+            decoration: InputDecoration(
+              hintText: "What school did you attend?",
+              errorText: "YOUR SCHOOL",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.school?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+            model.school = model.schoolTextController.text,
+          ).addMarginTop(),
+          TextField(
+            controller: model.majorTextController,
+            decoration: InputDecoration(
+              hintText: "Ex: Bachelor of Software Engineering",
+              errorText: "YOUR CONCENTRATIONS",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.major?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+            model.major = model.majorTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
