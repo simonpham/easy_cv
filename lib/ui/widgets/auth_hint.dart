@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:easy_cv/utils/extensions.dart';
 
 class AuthHint extends StatelessWidget {
-  final String routeName;
+  final Function onTap;
+  final Route route;
   final String preLabel;
   final String label;
 
   const AuthHint({
     Key key,
-    this.routeName,
+    this.route,
     this.preLabel,
-    this.label,
+    this.label, this.onTap,
   }) : super(key: key);
 
   @override
@@ -26,7 +27,13 @@ class AuthHint extends StatelessWidget {
             children: <Widget>[
               Text(preLabel),
               InkWell(
-                onTap: () => context.navigator.pushReplacementNamed(routeName),
+                onTap: () {
+                  if (onTap != null) {
+                    onTap();
+                    return;
+                  }
+                  context.navigator.pushReplacement(route);
+                },
                 child: Text(
                   label,
                   style: TextStyle(color: context.theme.primaryColor),

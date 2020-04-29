@@ -32,14 +32,13 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
       body: _buildBody(context),
     );
   }
 
   Widget _buildBody(BuildContext context) {
     return SafeArea(
-      top: false,
       child: Center(
         child: _buildMainUi(context),
       ),
@@ -49,12 +48,12 @@ class _SignInPageState extends State<SignInPage> {
   Widget _buildMainUi(BuildContext context) {
     return Column(
       children: <Widget>[
-        Logo(),
-        _buildSignInPage(context),
-        Expanded(child: Container(color: Colors.white)),
+        Logo().addMarginTop(),
+        _buildSignInPage(context).addMarginTop(),
+        Expanded(child: Container(color: Colors.transparent)),
         Container(color: Colors.grey[300], height: 1.0),
         AuthHint(
-          routeName: HomePage.routeName,
+          onTap: () => context.navigator.pop(),
           preLabel: signUpHint,
           label: signUpTitle,
         ),
@@ -97,7 +96,9 @@ class _SignInPageState extends State<SignInPage> {
             onPressed: () => _handleMainButtonPressed(),
             child: _buttonEnabled.ifTrue(
               Text(signInTitle.toUpperCase()),
-              LoadingIndicator(),
+              LoadingIndicator(
+                color: context.theme.primaryColor,
+              ),
             ),
           ),
         ),

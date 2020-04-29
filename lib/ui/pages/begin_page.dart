@@ -150,8 +150,8 @@ class Welcome extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                onPressed: () => context.navigator.pushReplacementNamed(
-                  SignInPage.routeName,
+                onPressed: () => context.navigator.push(
+                  SignInPage().route(context),
                 ),
               ).expand()
             ],
@@ -283,7 +283,7 @@ class PageLocation extends StatelessWidget {
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
             onChanged: (text) =>
-            model.location = model.locationTextController.text,
+                model.location = model.locationTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
@@ -335,8 +335,7 @@ class PageEmail extends StatelessWidget {
             ),
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
-            onChanged: (text) =>
-            model.email = model.emailTextController.text,
+            onChanged: (text) => model.email = model.emailTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
@@ -388,8 +387,7 @@ class PageBio extends StatelessWidget {
             ),
             maxLength: _maxBioLength,
             maxLengthEnforced: true,
-            onChanged: (text) =>
-            model.bio = model.bioTextController.text,
+            onChanged: (text) => model.bio = model.bioTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
@@ -441,8 +439,7 @@ class PageEducation extends StatelessWidget {
             ),
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
-            onChanged: (text) =>
-            model.school = model.schoolTextController.text,
+            onChanged: (text) => model.school = model.schoolTextController.text,
           ).addMarginTop(),
           TextField(
             controller: model.majorTextController,
@@ -466,8 +463,7 @@ class PageEducation extends StatelessWidget {
             ),
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
-            onChanged: (text) =>
-            model.major = model.majorTextController.text,
+            onChanged: (text) => model.major = model.majorTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
@@ -520,7 +516,7 @@ class PageExperience extends StatelessWidget {
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
             onChanged: (text) =>
-            model.company = model.companyTextController.text,
+                model.company = model.companyTextController.text,
           ).addMarginTop(),
           TextField(
             controller: model.positionTextController,
@@ -545,7 +541,7 @@ class PageExperience extends StatelessWidget {
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
             onChanged: (text) =>
-            model.position = model.positionTextController.text,
+                model.position = model.positionTextController.text,
           ).addMarginTop(),
           TextField(
             controller: model.companyLocationTextController,
@@ -555,7 +551,8 @@ class PageExperience extends StatelessWidget {
               errorStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
-              counterText: "${model.companyLocation?.length ?? 0}/$_maxNameLength",
+              counterText:
+                  "${model.companyLocation?.length ?? 0}/$_maxNameLength",
               counterStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
@@ -569,8 +566,8 @@ class PageExperience extends StatelessWidget {
             ),
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
-            onChanged: (text) =>
-            model.companyLocation = model.companyLocationTextController.text,
+            onChanged: (text) => model.companyLocation =
+                model.companyLocationTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
@@ -623,7 +620,7 @@ class PageUsername extends StatelessWidget {
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
             onChanged: (text) =>
-            model.username = model.usernameTextController.text,
+                model.username = model.usernameTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
@@ -678,7 +675,7 @@ class PagePassword extends StatelessWidget {
             maxLength: _maxNameLength,
             maxLengthEnforced: true,
             onChanged: (text) =>
-            model.password = model.passwordTextController.text,
+                model.password = model.passwordTextController.text,
           ).addMarginTop(),
           Container().expand(),
           Row(

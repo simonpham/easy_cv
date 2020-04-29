@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:easy_cv/constants/strings.dart';
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/pages/sign_in_page.dart';
 import 'package:easy_cv/ui/widgets/auth_hint.dart';
 import 'package:easy_cv/ui/widgets/logo.dart';
 import 'package:easy_cv/ui/widgets/sign_up_form.dart';
-
 import 'package:easy_cv/utils/extensions.dart';
 import 'package:easy_cv/utils/string_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SignUpPage extends StatefulWidget {
   static const String routeName = "/sign_up";
@@ -69,7 +68,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
             Expanded(child: Container(color: Colors.white)),
             Container(color: Colors.grey[300], height: 1.0),
             AuthHint(
-              routeName: SignInPage.routeName,
+              route: SignInPage().route(context),
               preLabel: signInHint,
               label: signInTitle,
             ),

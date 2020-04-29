@@ -226,6 +226,12 @@ extension ExtendedWidget on Widget {
     );
   }
 
+  Route route(BuildContext context) {
+    return MaterialPageRoute(
+      builder: (context) => this,
+    );
+  }
+
   Widget wrapSafeArea() {
     return SafeArea(
       child: this,
