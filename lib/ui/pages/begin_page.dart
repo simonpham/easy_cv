@@ -6,6 +6,8 @@ import 'package:easy_cv/view_models/begin_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+const _navigateButtonsHeight = 100.0;
+
 class BeginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -224,6 +226,7 @@ class PageName extends StatelessWidget {
                 model.lastName = model.lastNameTextController.text,
           ).addMarginTop(),
           Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
         ],
       ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
     );
@@ -277,6 +280,7 @@ class PageLocation extends StatelessWidget {
             model.location = model.locationTextController.text,
           ).addMarginTop(),
           Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
         ],
       ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
     );
@@ -330,6 +334,7 @@ class PageEmail extends StatelessWidget {
             model.location = model.locationTextController.text,
           ).addMarginTop(),
           Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
         ],
       ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
     );
@@ -383,6 +388,7 @@ class PageBio extends StatelessWidget {
             model.bio = model.bioTextController.text,
           ).addMarginTop(),
           Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
         ],
       ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
     );
@@ -436,6 +442,7 @@ class PageUsername extends StatelessWidget {
             model.username = model.usernameTextController.text,
           ).addMarginTop(),
           Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
         ],
       ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
     );
@@ -491,6 +498,7 @@ class PagePassword extends StatelessWidget {
             model.password = model.passwordTextController.text,
           ).addMarginTop(),
           Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
         ],
       ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
     );
