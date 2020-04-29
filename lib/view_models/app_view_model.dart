@@ -1,7 +1,7 @@
-import 'package:easy_cv/services/dsc_portal_api_service.dart';
-import 'package:flutter/foundation.dart';
 import 'package:easy_cv/models/dsc_user.dart';
+import 'package:easy_cv/services/dsc_portal_api_service.dart';
 import 'package:easy_cv/singleton_instances.dart';
+import 'package:flutter/foundation.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class AppViewModel extends Model {
@@ -32,13 +32,17 @@ class AppViewModel extends Model {
   Future<bool> signUp(
     String email,
     String password,
-    String name,
+    String firstName,
+    String lastName,
+    String location,
+    String bio,
     String username, {
     Function onError,
   }) async {
     try {
       final result = await apiSvc?.signUpWithEmailPassword(email, password);
-      user = await apiSvc?.updateUser(result.user, name, username);
+      user = await apiSvc?.updateUser(
+          result.user, firstName, lastName, location, bio, username);
     } catch (error) {
       if (onError != null) {
         onError(error);

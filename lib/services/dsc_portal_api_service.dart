@@ -38,17 +38,23 @@ class DscPortalApiService implements InterfaceDscPortalApi {
   @override
   Future<DscUser> updateUser(
     FirebaseUser user,
-    String name,
+    String firstName,
+    String lastName,
+    String location,
+    String bio,
     String username,
   ) async {
     final CollectionReference ref = firestore.collection('users');
 
     final newData = {
       'uid': user.uid,
-      'name': name ?? user.displayName ?? "N/A",
       'profile_pic_url': user.photoUrl ?? "",
       'email': user.email,
       'username': username ?? user.email.split("@").first,
+      'first_name': firstName,
+      'last_name': lastName,
+      'location': location,
+      'bio': bio,
     };
     await ref.document(user.uid).setData(newData, merge: true);
 

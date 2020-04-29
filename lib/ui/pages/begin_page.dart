@@ -80,9 +80,19 @@ class BeginPage extends StatelessWidget {
             final nextPage = currentPage + 1;
             if (nextPage == lastPage) {
               // TODO: show dialog - can't go back
-            }
-            if (nextPage < pages.length) {
-              model.mainPageController.goTo(nextPage);
+              context.showAlertDialog(
+                message: "You won't be able to get back to previous steps.",
+                title: "Are you sure to continue?",
+                yesAction: () {
+                  if (nextPage < pages.length) {
+                    model.mainPageController.goTo(nextPage);
+                  }
+                },
+              );
+            } else {
+              if (nextPage < pages.length) {
+                model.mainPageController.goTo(nextPage);
+              }
             }
           },
           child: Icon(
@@ -690,7 +700,19 @@ class PagePassword extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // TODO: show dialog
+                  context.showAlertDialog(
+                      message: "Are you sure to sign up?",
+                      yesAction: () {
+                        appViewModel.signUp(
+                          model.email,
+                          model.password,
+                          model.firstName,
+                          model.lastName,
+                          model.location,
+                          model.bio,
+                          model.username,
+                        );
+                      });
                 },
               ).expand()
             ],

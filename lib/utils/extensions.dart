@@ -87,7 +87,34 @@ extension ExtendedContext on BuildContext {
     return result;
   }
 
-  Future showAlertDialog({String title, @required String message}) {
+  Future showAlertDialog({
+    String title,
+    @required String message,
+    Function yesAction,
+  }) {
+    final List<Widget> actions = [];
+    if (yesAction != null) {
+      actions.addAll([
+        FlatButton(
+          child: Text("NO"),
+          onPressed: () => this.pop(),
+        ),
+        FlatButton(
+          child: Text("YES"),
+          onPressed: () async {
+            await yesAction();
+            this.pop();
+          },
+        ),
+      ]);
+    } else {
+      actions.add(
+        FlatButton(
+          child: Text("OKAY"),
+          onPressed: () => this.pop(),
+        ),
+      );
+    }
     return showDialog<void>(
       context: this,
       builder: (BuildContext context) {
@@ -103,12 +130,7 @@ extension ExtendedContext on BuildContext {
           content: Text(
             message ?? "",
           ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("OKAY"),
-              onPressed: () => this.pop(),
-            ),
-          ],
+          actions: actions,
         );
       },
     );
