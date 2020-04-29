@@ -17,6 +17,18 @@ class BeginViewModel extends Model {
     companyTextController = TextEditingController();
     positionTextController = TextEditingController();
     companyLocationTextController = TextEditingController();
+    firstNameFocusNode = FocusNode();
+    lastNameFocusNode = FocusNode();
+    locationFocusNode = FocusNode();
+    emailFocusNode = FocusNode();
+    bioFocusNode = FocusNode();
+    usernameFocusNode = FocusNode();
+    passwordFocusNode = FocusNode();
+    schoolFocusNode = FocusNode();
+    majorFocusNode = FocusNode();
+    companyFocusNode = FocusNode();
+    positionFocusNode = FocusNode();
+    companyLocationFocusNode = FocusNode();
     firstName = "";
     lastName = "";
     location = "";
@@ -59,6 +71,15 @@ class BeginViewModel extends Model {
     notifyListeners();
   }
 
+  FocusNode _firstNameFocusNode;
+
+  FocusNode get firstNameFocusNode => _firstNameFocusNode;
+
+  set firstNameFocusNode(FocusNode value) {
+    _firstNameFocusNode = value;
+    notifyListeners();
+  }
+
   String _firstName;
 
   String get firstName => _firstName;
@@ -75,6 +96,15 @@ class BeginViewModel extends Model {
 
   set lastNameTextController(TextEditingController value) {
     _lastNameTextController = value;
+    notifyListeners();
+  }
+
+  FocusNode _lastNameFocusNode;
+
+  FocusNode get lastNameFocusNode => _lastNameFocusNode;
+
+  set lastNameFocusNode(FocusNode value) {
+    _lastNameFocusNode = value;
     notifyListeners();
   }
 
@@ -97,6 +127,15 @@ class BeginViewModel extends Model {
     notifyListeners();
   }
 
+  FocusNode _locationFocusNode;
+
+  FocusNode get locationFocusNode => _locationFocusNode;
+
+  set locationFocusNode(FocusNode value) {
+    _locationFocusNode = value;
+    notifyListeners();
+  }
+
   String _location;
 
   String get location => _location;
@@ -113,6 +152,15 @@ class BeginViewModel extends Model {
 
   set emailTextController(TextEditingController value) {
     _emailTextController = value;
+    notifyListeners();
+  }
+
+  FocusNode _emailFocusNode;
+
+  FocusNode get emailFocusNode => _emailFocusNode;
+
+  set emailFocusNode(FocusNode value) {
+    _emailFocusNode = value;
     notifyListeners();
   }
 
@@ -135,6 +183,15 @@ class BeginViewModel extends Model {
     notifyListeners();
   }
 
+  FocusNode _bioFocusNode;
+
+  FocusNode get bioFocusNode => _bioFocusNode;
+
+  set bioFocusNode(FocusNode value) {
+    _bioFocusNode = value;
+    notifyListeners();
+  }
+
   String _bio;
 
   String get bio => _bio;
@@ -151,6 +208,15 @@ class BeginViewModel extends Model {
 
   set usernameTextController(TextEditingController value) {
     _usernameTextController = value;
+    notifyListeners();
+  }
+
+  FocusNode _usernameFocusNode;
+
+  FocusNode get usernameFocusNode => _usernameFocusNode;
+
+  set usernameFocusNode(FocusNode value) {
+    _usernameFocusNode = value;
     notifyListeners();
   }
 
@@ -173,6 +239,15 @@ class BeginViewModel extends Model {
     notifyListeners();
   }
 
+  FocusNode _passwordFocusNode;
+
+  FocusNode get passwordFocusNode => _passwordFocusNode;
+
+  set passwordFocusNode(FocusNode value) {
+    _passwordFocusNode = value;
+    notifyListeners();
+  }
+
   String _password;
 
   String get password => _password;
@@ -189,6 +264,15 @@ class BeginViewModel extends Model {
 
   set schoolTextController(TextEditingController value) {
     _schoolTextController = value;
+    notifyListeners();
+  }
+
+  FocusNode _schoolFocusNode;
+
+  FocusNode get schoolFocusNode => _schoolFocusNode;
+
+  set schoolFocusNode(FocusNode value) {
+    _schoolFocusNode = value;
     notifyListeners();
   }
 
@@ -211,6 +295,15 @@ class BeginViewModel extends Model {
     notifyListeners();
   }
 
+  FocusNode _majorFocusNode;
+
+  FocusNode get majorFocusNode => _majorFocusNode;
+
+  set majorFocusNode(FocusNode value) {
+    _majorFocusNode = value;
+    notifyListeners();
+  }
+
   String _major;
 
   String get major => _major;
@@ -227,6 +320,15 @@ class BeginViewModel extends Model {
 
   set companyTextController(TextEditingController value) {
     _companyTextController = value;
+    notifyListeners();
+  }
+
+  FocusNode _companyFocusNode;
+
+  FocusNode get companyFocusNode => _companyFocusNode;
+
+  set companyFocusNode(FocusNode value) {
+    _companyFocusNode = value;
     notifyListeners();
   }
 
@@ -249,6 +351,15 @@ class BeginViewModel extends Model {
     notifyListeners();
   }
 
+  FocusNode _positionFocusNode;
+
+  FocusNode get positionFocusNode => _positionFocusNode;
+
+  set positionFocusNode(FocusNode value) {
+    _positionFocusNode = value;
+    notifyListeners();
+  }
+
   String _position;
 
   String get position => _position;
@@ -261,10 +372,20 @@ class BeginViewModel extends Model {
   /// Company location
   TextEditingController _companyLocationTextController;
 
-  TextEditingController get companyLocationTextController => _companyLocationTextController;
+  TextEditingController get companyLocationTextController =>
+      _companyLocationTextController;
 
   set companyLocationTextController(TextEditingController value) {
     _companyLocationTextController = value;
+    notifyListeners();
+  }
+
+  FocusNode _companyLocationFocusNode;
+
+  FocusNode get companyLocationFocusNode => _companyLocationFocusNode;
+
+  set companyLocationFocusNode(FocusNode value) {
+    _companyLocationFocusNode = value;
     notifyListeners();
   }
 

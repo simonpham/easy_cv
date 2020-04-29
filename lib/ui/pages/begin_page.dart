@@ -11,6 +11,7 @@ import 'package:scoped_model/scoped_model.dart';
 const _maxNameLength = 32;
 const _maxBioLength = 100;
 const _navigateButtonsHeight = 100.0;
+const pageLength = 9;
 
 class BeginPage extends StatelessWidget {
   @override
@@ -57,59 +58,14 @@ class BeginPage extends StatelessWidget {
 
   Widget _buildNavigateButtons(
       BuildContext context, BeginViewModel model, List<StatelessWidget> pages) {
-    final currentPage = model.currentPage;
-    final lastPage = pages.length - 1;
-    if (currentPage == 0 || currentPage == pages.length - 1) {
+    if (model.currentPage == 0 || model.currentPage == pageLength - 1) {
       return SizedBox();
-    }
-    bool isNextEnable = true;
-    switch (currentPage) {
-      case 1:
-        if (model.firstName.isEmpty || model.lastName.isEmpty) {
-          isNextEnable = false;
-        }
-        break;
-      case 2:
-        if (model.location.isEmpty) {
-          isNextEnable = false;
-        }
-        break;
-      case 3:
-        if (model.email.isEmpty) {
-          isNextEnable = false;
-        }
-        break;
-      case 4:
-        if (model.bio.isEmpty) {
-          isNextEnable = false;
-        }
-        break;
-      case 5:
-        if (model.school.isEmpty || model.major.isEmpty) {
-          isNextEnable = false;
-        }
-        break;
-      case 6:
-        if (model.company.isEmpty ||
-            model.position.isEmpty ||
-            model.companyLocation.isEmpty) {
-          isNextEnable = false;
-        }
-        break;
-      case 7:
-        if (model.username.isEmpty ||
-            !model.username.validate(RegexUtils.username)) {
-          isNextEnable = false;
-        }
-        break;
-      default:
-        break;
     }
     return Column(
       children: <Widget>[
         Tappable(
           onTap: () {
-            final previousPage = currentPage - 1;
+            final previousPage = model.currentPage - 1;
             if (previousPage >= 0) {
               model.mainPageController.goTo(previousPage);
             }
@@ -121,32 +77,7 @@ class BeginPage extends StatelessWidget {
           ).addPadding(),
         ),
         Tappable(
-          onTap: () {
-            if (!isNextEnable) {
-              context.showAlertDialog(
-                title: invalidInputTitle,
-                message: "Please check your input and try again!",
-              );
-              return;
-            }
-            final nextPage = currentPage + 1;
-            if (nextPage == lastPage) {
-              // TODO: show dialog - can't go back
-              context.showAlertDialog(
-                message: "You won't be able to get back to previous steps.",
-                title: "Are you sure to continue?",
-                yesAction: () {
-                  if (nextPage < pages.length) {
-                    model.mainPageController.goTo(nextPage);
-                  }
-                },
-              );
-            } else {
-              if (nextPage < pages.length) {
-                model.mainPageController.goTo(nextPage);
-              }
-            }
-          },
+          onTap: () => _handleNextPage(context, model),
           child: Icon(
             Icons.keyboard_arrow_down,
             size: 30,
@@ -155,6 +86,82 @@ class BeginPage extends StatelessWidget {
         ).addMarginTop(1),
       ],
     ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea();
+  }
+}
+
+Future _handleNextPage(
+  BuildContext context,
+  BeginViewModel model,
+) {
+  final currentPage = model.currentPage;
+  final lastPage = pageLength - 1;
+  bool isNextEnable = true;
+  switch (currentPage) {
+    case 1:
+      if (model.firstName.isEmpty || model.lastName.isEmpty) {
+        isNextEnable = false;
+      }
+      break;
+    case 2:
+      if (model.location.isEmpty) {
+        isNextEnable = false;
+      }
+      break;
+    case 3:
+      if (model.email.isEmpty) {
+        isNextEnable = false;
+      }
+      break;
+    case 4:
+      if (model.bio.isEmpty) {
+        isNextEnable = false;
+      }
+      break;
+    case 5:
+      if (model.school.isEmpty || model.major.isEmpty) {
+        isNextEnable = false;
+      }
+      break;
+    case 6:
+      if (model.company.isEmpty ||
+          model.position.isEmpty ||
+          model.companyLocation.isEmpty) {
+        isNextEnable = false;
+      }
+      break;
+    case 7:
+      if (model.username.isEmpty ||
+          !model.username.validate(RegexUtils.username)) {
+        isNextEnable = false;
+      }
+      break;
+    default:
+      break;
+  }
+  if (!isNextEnable) {
+    context.showAlertDialog(
+      title: invalidInputTitle,
+      message: "Please check your input and try again!",
+    );
+    return null;
+  }
+  final nextPage = currentPage + 1;
+  if (nextPage == lastPage) {
+    // TODO: show dialog - can't go back
+    context.showAlertDialog(
+      message: "You won't be able to get back to previous steps.",
+      title: "Are you sure to continue?",
+      yesAction: () {
+        if (nextPage < pageLength) {
+          return model.mainPageController.goTo(nextPage);
+        }
+        return null;
+      },
+    );
+  } else {
+    if (nextPage < pageLength) {
+      return model.mainPageController.goTo(nextPage);
+    }
   }
 }
 
@@ -245,6 +252,9 @@ class PageName extends StatelessWidget {
           ).addMarginTop(),
           Container().expand(),
           TextField(
+            focusNode: model.firstNameFocusNode,
+            onEditingComplete: () => model.lastNameFocusNode.requestFocus(),
+            textInputAction: TextInputAction.next,
             controller: model.firstNameTextController,
             decoration: InputDecoration(
               hintText: "They call me..",
@@ -270,6 +280,12 @@ class PageName extends StatelessWidget {
                 model.firstName = model.firstNameTextController.text,
           ).addMarginTop(),
           TextField(
+            focusNode: model.lastNameFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              await _handleNextPage(context, model);
+              model.locationFocusNode.requestFocus();
+            },
             controller: model.lastNameTextController,
             decoration: InputDecoration(
               hintText: "And last but not least..",
@@ -323,6 +339,12 @@ class PageLocation extends StatelessWidget {
           ).addMarginTop(),
           Container().expand(),
           TextField(
+            focusNode: model.locationFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              await _handleNextPage(context, model);
+              model.emailFocusNode.requestFocus();
+            },
             controller: model.locationTextController,
             decoration: InputDecoration(
               hintText: "I'm living at..",
@@ -376,6 +398,12 @@ class PageEmail extends StatelessWidget {
           ).addMarginTop(),
           Container().expand(),
           TextField(
+            focusNode: model.emailFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              await _handleNextPage(context, model);
+              model.bioFocusNode.requestFocus();
+            },
             controller: model.emailTextController,
             decoration: InputDecoration(
               hintText: "My email address is..",
@@ -428,6 +456,12 @@ class PageBio extends StatelessWidget {
           ).addMarginTop(),
           Container().expand(),
           TextField(
+            focusNode: model.bioFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              await _handleNextPage(context, model);
+              model.schoolFocusNode.requestFocus();
+            },
             controller: model.bioTextController,
             decoration: InputDecoration(
               hintText: "I eat code for breakfast..",
@@ -480,6 +514,11 @@ class PageEducation extends StatelessWidget {
           ).addMarginTop(),
           Container().expand(),
           TextField(
+            focusNode: model.schoolFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              model.majorFocusNode.requestFocus();
+            },
             controller: model.schoolTextController,
             decoration: InputDecoration(
               hintText: "What school did you attend?",
@@ -504,6 +543,12 @@ class PageEducation extends StatelessWidget {
             onChanged: (text) => model.school = model.schoolTextController.text,
           ).addMarginTop(),
           TextField(
+            focusNode: model.majorFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              await _handleNextPage(context, model);
+              model.companyFocusNode.requestFocus();
+            },
             controller: model.majorTextController,
             decoration: InputDecoration(
               hintText: "Ex: Bachelor of Software Engineering",
@@ -556,6 +601,11 @@ class PageExperience extends StatelessWidget {
           ).addMarginTop(),
           Container().expand(),
           TextField(
+            focusNode: model.companyFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              model.positionFocusNode.requestFocus();
+            },
             controller: model.companyTextController,
             decoration: InputDecoration(
               hintText: "Where have you worked?",
@@ -581,6 +631,11 @@ class PageExperience extends StatelessWidget {
                 model.company = model.companyTextController.text,
           ).addMarginTop(),
           TextField(
+            focusNode: model.positionFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              model.companyLocationFocusNode.requestFocus();
+            },
             controller: model.positionTextController,
             decoration: InputDecoration(
               hintText: "What is your job title?",
@@ -606,6 +661,12 @@ class PageExperience extends StatelessWidget {
                 model.position = model.positionTextController.text,
           ).addMarginTop(),
           TextField(
+            focusNode: model.companyLocationFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              await _handleNextPage(context, model);
+              model.usernameFocusNode.requestFocus();
+            },
             controller: model.companyLocationTextController,
             decoration: InputDecoration(
               hintText: "My company is located in..",
@@ -660,6 +721,11 @@ class PageUsername extends StatelessWidget {
           ).addMarginTop(),
           Container().expand(),
           TextField(
+            focusNode: model.usernameFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              await _handleNextPage(context, model);
+            },
             controller: model.usernameTextController,
             decoration: InputDecoration(
               hintText: "My username is..",
