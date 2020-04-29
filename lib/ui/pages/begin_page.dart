@@ -19,6 +19,7 @@ class BeginPage extends StatelessWidget {
               PageName(model),
               PageLocation(model),
               PageEmail(model),
+              PageBio(model),
             ];
             return Stack(
               children: <Widget>[
@@ -325,6 +326,59 @@ class PageEmail extends StatelessWidget {
             maxLengthEnforced: true,
             onChanged: (text) =>
             model.location = model.locationTextController.text,
+          ).addMarginTop(),
+          Container().expand(),
+        ],
+      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
+    );
+  }
+}
+
+class PageBio extends StatelessWidget {
+  final BeginViewModel model;
+
+  const PageBio(this.model, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const _maxNameLength = 32;
+    return Container(
+      color: Colors.deepPurple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Add a short bio to tell people more about yourself",
+            style: context.textTheme.headline5.copyWith(
+              color: Colors.white.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+          ).addMarginTop(),
+          Container().expand(),
+          TextField(
+            controller: model.bioTextController,
+            decoration: InputDecoration(
+              hintText: "I eat code for breakfast..",
+              errorText: "YOUR SHORT BIO",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.location?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+            model.bio = model.bioTextController.text,
           ).addMarginTop(),
           Container().expand(),
         ],

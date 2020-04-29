@@ -9,10 +9,12 @@ class BeginViewModel extends Model {
     lastNameTextController = TextEditingController();
     locationTextController = TextEditingController();
     emailTextController = TextEditingController();
+    bioTextController = TextEditingController();
     firstName = "";
     lastName = "";
     location = "";
     email = "";
+    bio = "";
   }
 
   PageController _mainPageController;
@@ -106,6 +108,25 @@ class BeginViewModel extends Model {
 
   set email(String value) {
     _email = value;
+    notifyListeners();
+  }
+
+  /// Short bio
+  TextEditingController _bioTextController;
+
+  TextEditingController get bioTextController => _bioTextController;
+
+  set bioTextController(TextEditingController value) {
+    _bioTextController = value;
+    notifyListeners();
+  }
+
+  String _bio;
+
+  String get bio => _bio;
+
+  set bio(String value) {
+    _bio = value;
     notifyListeners();
   }
 }
