@@ -6,6 +6,8 @@ import 'package:easy_cv/view_models/begin_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+const _maxNameLength = 32;
+const _maxBioLength = 100;
 const _navigateButtonsHeight = 100.0;
 
 class BeginPage extends StatelessWidget {
@@ -54,7 +56,8 @@ class BeginPage extends StatelessWidget {
   Widget _buildNavigateButtons(
       BuildContext context, BeginViewModel model, List<StatelessWidget> pages) {
     final currentPage = model.currentPage;
-    if (currentPage == 0) {
+    final lastPage = pages.length - 1;
+    if (currentPage == 0 || currentPage == pages.length - 1) {
       return SizedBox();
     }
     return Column(
@@ -75,6 +78,9 @@ class BeginPage extends StatelessWidget {
         Tappable(
           onTap: () {
             final nextPage = currentPage + 1;
+            if (nextPage == lastPage) {
+              // TODO: show dialog - can't go back
+            }
             if (nextPage < pages.length) {
               model.mainPageController.goTo(nextPage);
             }
@@ -163,7 +169,6 @@ class PageName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _maxNameLength = 32;
     return Container(
       color: Colors.deepPurple,
       child: Column(
@@ -242,7 +247,6 @@ class PageLocation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _maxNameLength = 32;
     return Container(
       color: Colors.deepPurple,
       child: Column(
@@ -296,7 +300,6 @@ class PageEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _maxNameLength = 32;
     return Container(
       color: Colors.deepPurple,
       child: Column(
@@ -350,7 +353,6 @@ class PageBio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _maxNameLength = 32;
     return Container(
       color: Colors.deepPurple,
       child: Column(
@@ -372,7 +374,7 @@ class PageBio extends StatelessWidget {
               errorStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
-              counterText: "${model.bio?.length ?? 0}/$_maxNameLength",
+              counterText: "${model.bio?.length ?? 0}/$_maxBioLength",
               counterStyle: TextStyle(
                 color: Colors.white.withOpacity(0.3),
               ),
@@ -384,120 +386,10 @@ class PageBio extends StatelessWidget {
             style: context.textTheme.headline6.copyWith(
               color: Colors.white.withOpacity(0.87),
             ),
-            maxLength: _maxNameLength,
+            maxLength: _maxBioLength,
             maxLengthEnforced: true,
             onChanged: (text) =>
             model.bio = model.bioTextController.text,
-          ).addMarginTop(),
-          Container().expand(),
-          SizedBox(height: _navigateButtonsHeight),
-        ],
-      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
-    );
-  }
-}
-
-class PageUsername extends StatelessWidget {
-  final BeginViewModel model;
-
-  const PageUsername(this.model, {Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    const _maxNameLength = 32;
-    return Container(
-      color: Colors.deepPurple,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "Choose a username. This will be include in the URL of your profile.",
-            style: context.textTheme.headline5.copyWith(
-              color: Colors.white.withOpacity(0.5),
-              fontWeight: FontWeight.w500,
-            ),
-          ).addMarginTop(),
-          Container().expand(),
-          TextField(
-            controller: model.usernameTextController,
-            decoration: InputDecoration(
-              hintText: "My username is..",
-              errorText: "YOUR USERNAME",
-              errorStyle: TextStyle(
-                color: Colors.white.withOpacity(0.3),
-              ),
-              counterText: "${model.username?.length ?? 0}/$_maxNameLength",
-              counterStyle: TextStyle(
-                color: Colors.white.withOpacity(0.3),
-              ),
-              hintStyle: TextStyle(
-                color: Colors.white.withOpacity(0.6),
-              ),
-              contentPadding: EdgeInsets.zero,
-            ),
-            style: context.textTheme.headline6.copyWith(
-              color: Colors.white.withOpacity(0.87),
-            ),
-            maxLength: _maxNameLength,
-            maxLengthEnforced: true,
-            onChanged: (text) =>
-            model.username = model.usernameTextController.text,
-          ).addMarginTop(),
-          Container().expand(),
-          SizedBox(height: _navigateButtonsHeight),
-        ],
-      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
-    );
-  }
-}
-
-class PagePassword extends StatelessWidget {
-  final BeginViewModel model;
-
-  const PagePassword(this.model, {Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    const _maxNameLength = 32;
-    return Container(
-      color: Colors.deepPurple,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "Final step! Create a password.",
-            style: context.textTheme.headline5.copyWith(
-              color: Colors.white.withOpacity(0.5),
-              fontWeight: FontWeight.w500,
-            ),
-          ).addMarginTop(),
-          Container().expand(),
-          TextField(
-            controller: model.passwordTextController,
-            keyboardType: TextInputType.visiblePassword,
-            obscureText: true,
-            decoration: InputDecoration(
-              hintText: "••••••••",
-              errorText: "YOUR PASSWORD",
-              errorStyle: TextStyle(
-                color: Colors.white.withOpacity(0.3),
-              ),
-              counterText: "${model.password?.length ?? 0}/$_maxNameLength",
-              counterStyle: TextStyle(
-                color: Colors.white.withOpacity(0.3),
-              ),
-              hintStyle: TextStyle(
-                color: Colors.white.withOpacity(0.6),
-              ),
-              contentPadding: EdgeInsets.zero,
-            ),
-            style: context.textTheme.headline6.copyWith(
-              color: Colors.white.withOpacity(0.87),
-            ),
-            maxLength: _maxNameLength,
-            maxLengthEnforced: true,
-            onChanged: (text) =>
-            model.password = model.passwordTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
@@ -514,7 +406,6 @@ class PageEducation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _maxNameLength = 32;
     return Container(
       color: Colors.deepPurple,
       child: Column(
@@ -593,7 +484,6 @@ class PageExperience extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _maxNameLength = 32;
     return Container(
       color: Colors.deepPurple,
       child: Column(
@@ -684,6 +574,131 @@ class PageExperience extends StatelessWidget {
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
+        ],
+      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
+    );
+  }
+}
+
+class PageUsername extends StatelessWidget {
+  final BeginViewModel model;
+
+  const PageUsername(this.model, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.deepPurple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Choose a username. This will be include in the URL of your profile.",
+            style: context.textTheme.headline5.copyWith(
+              color: Colors.white.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+          ).addMarginTop(),
+          Container().expand(),
+          TextField(
+            controller: model.usernameTextController,
+            decoration: InputDecoration(
+              hintText: "My username is..",
+              errorText: "YOUR USERNAME",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.username?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+            model.username = model.usernameTextController.text,
+          ).addMarginTop(),
+          Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
+        ],
+      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
+    );
+  }
+}
+
+class PagePassword extends StatelessWidget {
+  final BeginViewModel model;
+
+  const PagePassword(this.model, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.deepPurple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Final step! Create a password.",
+            style: context.textTheme.headline5.copyWith(
+              color: Colors.white.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+          ).addMarginTop(),
+          Container().expand(),
+          TextField(
+            controller: model.passwordTextController,
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: true,
+            decoration: InputDecoration(
+              hintText: "••••••••",
+              errorText: "YOUR PASSWORD",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.password?.length ?? 0}/$_maxNameLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxNameLength,
+            maxLengthEnforced: true,
+            onChanged: (text) =>
+            model.password = model.passwordTextController.text,
+          ).addMarginTop(),
+          Container().expand(),
+          Row(
+            children: <Widget>[
+              RaisedButton(
+                elevation: 16.0,
+                child: Text(
+                  "CREATE MY RESUME!",
+                  style: context.textTheme.subtitle2.copyWith(
+                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onPressed: () {
+                  // TODO: show dialog
+                },
+              ).expand()
+            ],
+          ),
+          SizedBox(height: 32.0),
         ],
       ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
     );
