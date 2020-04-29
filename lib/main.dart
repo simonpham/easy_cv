@@ -31,11 +31,20 @@ class EasyCv extends StatelessWidget {
           title: "Easy CV",
           theme: appTheme,
           darkTheme: darkTheme,
-          routes: {
-            "/": (_) => BeginPage(),
-            HomePage.routeName: (_) => HomePage(),
-            SignUpPage.routeName: (_) => SignUpPage(),
-            SignInPage.routeName: (_) => SignInPage(),
+          onGenerateRoute: (RouteSettings settings) {
+            final path = settings.name.split('/').last;
+            switch (path) {
+              case "":
+                return MaterialPageRoute(
+                  builder: (context) => BeginPage(),
+                );
+              default:
+                return MaterialPageRoute(
+                  builder: (context) => ProfilePage(
+                    profileName: path,
+                  ),
+                );
+            }
           },
           onUnknownRoute: (RouteSettings settings) {
             final username = settings.name.substring(1);
@@ -45,7 +54,6 @@ class EasyCv extends StatelessWidget {
               ),
             );
           },
-          initialRoute: "/",
           debugShowCheckedModeBanner: false,
         ),
       ),
