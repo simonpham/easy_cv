@@ -1,7 +1,7 @@
 import 'package:easy_cv/ui/pages/begin_page.dart';
-import 'package:flutter/material.dart';
-import 'package:easy_cv/utils/extensions.dart';
+import 'package:easy_cv/ui/pages/profile_page.dart';
 import 'package:easy_cv/view_models/app_view_model.dart';
+import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,12 +12,8 @@ class HomePage extends StatelessWidget {
     return ScopedModelDescendant<AppViewModel>(
       builder: (BuildContext context, _, AppViewModel model) {
         if (model.isSignedIn) {
-          return Container(
-            color: context.theme.primaryColor,
-            child: RaisedButton(
-              onPressed: () => model.signOut(),
-              child: Text("OK"),
-            ).center(),
+          return ProfilePage(
+            profileName: model.user.username,
           );
         }
         return BeginPage();
