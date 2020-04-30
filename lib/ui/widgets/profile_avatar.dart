@@ -1,3 +1,4 @@
+import 'package:easy_cv/assets.dart';
 import 'package:easy_cv/models/dsc_user.dart';
 import 'package:easy_cv/ui/widgets/image_view.dart';
 import 'package:easy_cv/utils/extensions.dart';
@@ -48,13 +49,23 @@ class ProfileAvatar extends StatelessWidget {
         width: avatarSize,
         child: Container(
           color: Colors.white,
-          child: ImageView(
-            user?.profilePicUrl ?? "https://i.imgur.com/oZccicr.jpg",
-            fit: BoxFit.cover,
-            heroAnimation: heroAnimation,
-          ),
+          child: _getImage(),
         ),
       ),
+    );
+  }
+
+  Widget _getImage() {
+    if (user?.profilePicUrl == null || user.profilePicUrl.isEmpty) {
+      return Image(
+        image: Images.profile,
+        fit: BoxFit.cover,
+      );
+    }
+    return ImageView(
+      user?.profilePicUrl,
+      fit: BoxFit.cover,
+      heroAnimation: heroAnimation,
     );
   }
 
