@@ -1,4 +1,5 @@
 import 'package:easy_cv/constants/strings.dart';
+import 'package:easy_cv/models/story.dart';
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/pages/sign_in_page.dart';
 import 'package:easy_cv/ui/widgets/tappable.dart';
@@ -546,7 +547,7 @@ class PageIntro extends StatelessWidget {
             style: context.textTheme.headline6.copyWith(
               color: Colors.white.withOpacity(0.87),
             ),
-            maxLength: _maxBioLength,
+            maxLength: _maxIntroLength,
             maxLengthEnforced: true,
             onChanged: (text) => model.intro = model.introTextController.text,
           ).addMarginTop(),
@@ -886,6 +887,15 @@ class PagePassword extends StatelessWidget {
                   context.showAlertDialog(
                     message: "Are you sure to sign up?",
                     yesAction: () {
+                      final Story school = Story(
+                        degree: model.major,
+                        company: model.school,
+                      );
+                      final Story company = Story(
+                        company: model.company,
+                        location: model.companyLocation,
+                        title: model.position,
+                      );
                       appViewModel.signUp(
                         model.email,
                         model.password,
@@ -895,6 +905,8 @@ class PagePassword extends StatelessWidget {
                         model.bio,
                         model.username,
                         model.intro,
+                        school,
+                        company,
                       );
                     },
                   );

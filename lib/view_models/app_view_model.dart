@@ -1,4 +1,5 @@
 import 'package:easy_cv/models/dsc_user.dart';
+import 'package:easy_cv/models/story.dart';
 import 'package:easy_cv/services/dsc_portal_api_service.dart';
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:flutter/foundation.dart';
@@ -37,13 +38,24 @@ class AppViewModel extends Model {
     String location,
     String bio,
     String username,
-    String intro, {
+    String intro,
+    Story school,
+    Story company, {
     Function onError,
   }) async {
     try {
       final result = await apiSvc?.signUpWithEmailPassword(email, password);
       user = await apiSvc?.updateUser(
-          result.user, firstName, lastName, location, bio, username, intro);
+        result.user,
+        firstName,
+        lastName,
+        location,
+        bio,
+        username,
+        intro,
+        school,
+        company,
+      );
     } catch (error) {
       if (onError != null) {
         onError(error);

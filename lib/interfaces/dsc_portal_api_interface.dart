@@ -19,6 +19,8 @@ abstract class InterfaceDscPortalApi {
     String bio,
     String username,
     String intro,
+    Story school,
+    Story company,
   );
 
   Future<List<Story>> getUserExperience(String uid);

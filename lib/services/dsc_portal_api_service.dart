@@ -44,6 +44,8 @@ class DscPortalApiService implements InterfaceDscPortalApi {
     String bio,
     String username,
     String intro,
+    Story school,
+    Story company,
   ) async {
     final CollectionReference ref = firestore.collection('users');
 
@@ -60,6 +62,18 @@ class DscPortalApiService implements InterfaceDscPortalApi {
       'intro': intro,
     };
     await ref.document(user.uid).setData(newData, merge: true);
+
+    /// Update education
+    await firestore.collection("users/${user.uid}/education").add({
+      'company': school.company,
+      'title': school.degree,
+    });
+
+    /// Update experience
+    await firestore.collection("users/${user.uid}/experience").add({
+      'company': company.company,
+      'title': company.title,
+    });
 
     /// Update CV url
     await firestore.collection('user_urls').document(username).setData({
