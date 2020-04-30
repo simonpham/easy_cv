@@ -204,6 +204,26 @@ class StoryEditViewModel extends Model {
     notifyListeners();
   }
 
+  /// Start date
+  int _startDate;
+
+  int get startDate => _startDate;
+
+  set startDate(int value) {
+    _startDate = value;
+    notifyListeners();
+  }
+
+  /// End date
+  int _endDate;
+
+  int get endDate => _endDate;
+
+  set endDate(int value) {
+    _endDate = value;
+    notifyListeners();
+  }
+
   void reset({
     String location,
     String school,
@@ -241,6 +261,9 @@ class StoryEditViewModel extends Model {
     summaryTextController = TextEditingController(text: summary ?? "");
     summaryFocusNode = FocusNode();
     this.summary = summary ?? "";
+
+    this.startDate = DateTime.now().millisecondsSinceEpoch;
+    this.endDate = DateTime.now().millisecondsSinceEpoch;
   }
 
   void initSchool(Story story) {
