@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:share/share.dart';
 
 class ProfilePage extends StatefulWidget {
   final String profileName;
@@ -48,12 +49,50 @@ class _ProfilePageState extends State<ProfilePage> {
           bool _isNotLoggedIn = widget.viewModel == null ||
               widget.viewModel.user?.uid != model.user?.uid;
           return Scaffold(
+            appBar: _buildAppBar(context, model, _isNotLoggedIn),
             floatingActionButton: _buildFab(context, model, _isNotLoggedIn),
             backgroundColor: Colors.white,
             body: _buildBody(context, model, _isNotLoggedIn),
           );
         },
       ),
+    );
+  }
+
+  Widget _buildAppBar(
+      BuildContext context, ProfileViewModel model, bool isNotLoggedIn) {
+    if (isNotLoggedIn) {
+      return null;
+    }
+    final cvUrl = "https://easycv.simonit.dev/#/${model.user.username}";
+    return AppBar(
+      title: Column(
+        children: <Widget>[
+          Text(
+            "Your profile is public at:",
+            style: context.textTheme.subtitle1.copyWith(
+              color: Colors.white.withOpacity(0.6),
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            cvUrl,
+            style: context.textTheme.subtitle1.copyWith(
+              color: Colors.white.withOpacity(0.87),
+              fontSize: 14.0,
+            ),
+          ).addPaddingVertical()
+        ],
+      ),
+      actions: <Widget>[
+        Tappable(
+          onTap: () {
+            Share.share(cvUrl);
+          },
+          child: Icon(Icons.share).addPadding(2),
+        ),
+      ],
     );
   }
 
@@ -241,9 +280,9 @@ extension WidgetExtension on Widget {
       onTap: () {
         Fluttertoast.showToast(
           msg: "Long press to edit!",
-          gravity: ToastGravity.TOP,
-          backgroundColor: context.theme.primaryColor,
-          textColor: Colors.white.withOpacity(0.87),
+          gravity: ToastGravity.CENTER,
+          backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+          textColor: Colors.white,
         );
       },
       onLongPress: () {
