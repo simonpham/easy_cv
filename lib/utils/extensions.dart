@@ -15,8 +15,8 @@ extension StringExtension on String {
     }
   }
 
-  String toDate() {
-    return DateFormat("MMM dd, yyyy").format(
+  String toDate([String format]) {
+    return DateFormat(format ?? "MMM dd, yyyy").format(
       DateTime.fromMillisecondsSinceEpoch(int.parse(this)),
     );
   }

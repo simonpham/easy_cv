@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_cv/utils/extensions.dart';
 import 'package:easy_cv/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -114,19 +116,25 @@ class SectionItem extends StatelessWidget {
     if (location?.isEmpty ?? true) {
       return [];
     }
+    int factor = 2;
+    try {
+      if (Platform.isAndroid || Platform.isIOS) {
+        factor = 1;
+      }
+    } catch (_) {}
     return [
       Icon(
         Icons.place,
         color: context.theme.unselectedWidgetColor.withOpacity(0.45),
         size: 20,
-      ).addMarginLeft(2),
+      ).addMarginLeft(factor),
       Text(
         location ?? "",
         style: context.textTheme.subtitle2.copyWith(
           color: context.theme.unselectedWidgetColor.withOpacity(0.45),
           fontWeight: FontWeight.w500,
         ),
-      ).addMarginLeft(0.5)
+      ).addMarginLeft(0.25 * factor)
     ];
   }
 
@@ -139,12 +147,18 @@ class SectionItem extends StatelessWidget {
       return [];
     }
 
-    String date = "$startDate".toDate();
+    String formatter;
+    try {
+      if (Platform.isAndroid || Platform.isIOS) {
+        formatter = "MM/yyyy";
+      }
+    } catch (_) {}
+    String date = "$startDate".toDate(formatter);
     if (isCurrent == true) {
       date = "$date - Now";
     } else {
       if (endDate != null) {
-        date = "$date - ${endDate.toString().toDate()}";
+        date = "$date - ${endDate.toString().toDate(formatter)}";
       }
     }
     return [
@@ -152,7 +166,7 @@ class SectionItem extends StatelessWidget {
         Icons.calendar_today,
         color: context.theme.unselectedWidgetColor.withOpacity(0.45),
         size: 20,
-      ),
+      ).addMarginLeft(),
       Text(
         date ?? "",
         style: context.textTheme.subtitle2.copyWith(
