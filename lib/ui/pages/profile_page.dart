@@ -276,8 +276,8 @@ extension WidgetExtension on Widget {
             context.showEditDialog(
               label: "YOUR FIRST NAME",
               text: model.user.firstName ?? "",
-              yesAction: (String firstName) {
-                context.showEditDialog(
+              yesAction: (String firstName) async {
+                await context.showEditDialog(
                   label: "YOUR LAST NAME",
                   text: model.user.lastName ?? "",
                   yesAction: (String lastName) {
