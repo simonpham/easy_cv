@@ -224,7 +224,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
 extension WidgetExtension on Widget {
   Widget wrapEditor(
-      BuildContext context, ProfileEnum type, bool isNotLoggedIn) {
+    BuildContext context,
+    ProfileEnum type,
+    bool isNotLoggedIn,
+  ) {
     if (isNotLoggedIn) {
       return this;
     }
@@ -238,7 +241,7 @@ extension WidgetExtension on Widget {
         );
       },
       onLongPress: () {
-        // edit
+//        context.navigator.push
       },
       child: this,
     );

@@ -1,4 +1,5 @@
 import 'package:easy_cv/ui/pages/begin_page.dart';
+import 'package:easy_cv/ui/pages/story_edit_page.dart';
 import 'package:easy_cv/ui/widgets/new_item_badge.dart';
 import 'package:easy_cv/utils/extensions.dart';
 import 'package:easy_cv/view_models/app_view_model.dart';
@@ -29,10 +30,24 @@ class AddStoryPage extends StatelessWidget {
                       NewItemBadge(
                         icon: Icons.school,
                         title: "School",
+                        onTap: () {
+                          context.navigator.push(
+                            StoryEditPage(
+                              type: StoryType.school,
+                            ).route(context),
+                          );
+                        },
                       ),
                       NewItemBadge(
                         icon: Icons.work,
                         title: "Workplace",
+                        onTap: () {
+                          context.navigator.push(
+                            StoryEditPage(
+                              type: StoryType.company,
+                            ).route(context),
+                          );
+                        },
                       ),
                       NewItemBadge(
                         icon: Icons.link,
