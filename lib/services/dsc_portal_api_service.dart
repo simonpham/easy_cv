@@ -67,12 +67,14 @@ class DscPortalApiService implements InterfaceDscPortalApi {
     await firestore.collection("users/${user.uid}/education").add({
       'company': school.company,
       'title': school.degree,
+      'location': school.location,
     });
 
     /// Update experience
     await firestore.collection("users/${user.uid}/experience").add({
       'company': company.company,
       'title': company.title,
+      'location': company.location,
     });
 
     /// Update CV url
