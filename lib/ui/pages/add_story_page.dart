@@ -1,3 +1,4 @@
+import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/pages/begin_page.dart';
 import 'package:easy_cv/ui/pages/story_edit_page.dart';
 import 'package:easy_cv/ui/widgets/new_item_badge.dart';
@@ -31,6 +32,7 @@ class AddStoryPage extends StatelessWidget {
                         icon: Icons.school,
                         title: "School",
                         onTap: () {
+                          storyEditViewModel.reset();
                           context.navigator.push(
                             StoryEditPage(
                               type: StoryType.school,
@@ -42,6 +44,7 @@ class AddStoryPage extends StatelessWidget {
                         icon: Icons.work,
                         title: "Workplace",
                         onTap: () {
+                          storyEditViewModel.reset();
                           context.navigator.push(
                             StoryEditPage(
                               type: StoryType.company,
