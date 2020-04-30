@@ -10,6 +10,7 @@ import 'package:easy_cv/utils/extensions.dart';
 import 'package:easy_cv/view_models/app_view_model.dart';
 import 'package:easy_cv/view_models/profile_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -229,7 +230,12 @@ extension WidgetExtension on Widget {
     }
     return Tappable(
       onTap: () {
-        // show toast: long press to edit
+        Fluttertoast.showToast(
+          msg: "Long press to edit!",
+          gravity: ToastGravity.TOP,
+          backgroundColor: context.theme.primaryColor,
+          textColor: Colors.white.withOpacity(0.87),
+        );
       },
       onLongPress: () {
         // edit
