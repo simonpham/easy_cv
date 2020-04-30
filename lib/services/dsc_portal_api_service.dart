@@ -86,6 +86,14 @@ class DscPortalApiService implements InterfaceDscPortalApi {
   }
 
   @override
+  Future<bool> updateProfile(DscUser user) async {
+    final CollectionReference ref = firestore.collection('users');
+    final newData = user.toMap();
+    await ref.document(user.uid).setData(newData, merge: true);
+    return true;
+  }
+
+  @override
   Future<void> signOut() {
     return firebaseAuth.signOut();
   }

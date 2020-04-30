@@ -71,4 +71,13 @@ class ProfileViewModel extends Model {
     }
     return education != null;
   }
+
+  Future<bool> updateProfile() async {
+    try {
+      await apiSvc?.updateProfile(user);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }

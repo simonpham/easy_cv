@@ -1,15 +1,15 @@
-import 'package:easy_cv/models/dsc_user.dart';
 import 'package:easy_cv/ui/pages/profile_page.dart';
 import 'package:easy_cv/ui/widgets/profile_info_item.dart';
+import 'package:easy_cv/view_models/profile_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfileInfoList extends StatelessWidget {
-  final DscUser user;
+  final ProfileViewModel model;
   final bool isNotLoggedIn;
 
   const ProfileInfoList({
     Key key,
-    this.user,
+    this.model,
     this.isNotLoggedIn = true,
   }) : super(key: key);
 
@@ -19,21 +19,21 @@ class ProfileInfoList extends StatelessWidget {
       children: <Widget>[
         ProfileInfoItem(
           icon: Icons.email,
-          title: user.email,
+          title: model?.user?.email,
           showDivider: false,
         ),
         ProfileInfoItem(
           icon: Icons.place,
-          title: user.location,
-        ).wrapEditor(context, ProfileEnum.location, isNotLoggedIn),
+          title: model?.user?.location,
+        ).wrapEditor(context, model, ProfileEnum.location, isNotLoggedIn),
         ProfileInfoItem(
           icon: Icons.link,
-          title: user.github,
-        ).wrapEditor(context, ProfileEnum.github, isNotLoggedIn),
+          title: model?.user?.github,
+        ).wrapEditor(context, model, ProfileEnum.github, isNotLoggedIn),
         ProfileInfoItem(
           icon: Icons.link,
-          title: user.website,
-        ).wrapEditor(context, ProfileEnum.website, isNotLoggedIn),
+          title: model?.user?.website,
+        ).wrapEditor(context, model, ProfileEnum.website, isNotLoggedIn),
       ],
     );
   }

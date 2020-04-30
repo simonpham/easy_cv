@@ -40,4 +40,21 @@ class DscUser {
     github = map['github'];
     website = map['website'];
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'email': email,
+      'first_name': firstName,
+      'last_name': lastName,
+      'username': username,
+      'gender': gender,
+      'profile_pic_url': profilePicUrl,
+      'intro': intro,
+      'bio': bio,
+      'location': location,
+      'github': github,
+      'website': website,
+    };
+  }
 }

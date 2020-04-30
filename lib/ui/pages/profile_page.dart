@@ -130,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: context.theme.primaryColor.withOpacity(0.87),
             fontWeight: FontWeight.w400,
           ),
-        ).wrapEditor(context, ProfileEnum.intro, isNotLoggedIn),
+        ).wrapEditor(context, model, ProfileEnum.intro, isNotLoggedIn),
       ]
         ..addAll(_getExperienceSection(context, model, isNotLoggedIn))
         ..addAll(_getEducationSection(context, model, isNotLoggedIn)),
@@ -167,7 +167,7 @@ class _ProfilePageState extends State<ProfilePage> {
           user: model.user,
           showRing: false,
         )
-            .wrapEditor(context, ProfileEnum.avatar, isNotLoggedIn)
+            .wrapEditor(context, model, ProfileEnum.avatar, isNotLoggedIn)
             .addMarginTop(6),
         Text(
           "${model.user.firstName} ${model.user.lastName}",
@@ -175,16 +175,21 @@ class _ProfilePageState extends State<ProfilePage> {
             color: context.theme.primaryColor.withOpacity(0.87),
             fontWeight: FontWeight.bold,
           ),
-        ).wrapEditor(context, ProfileEnum.name, isNotLoggedIn).addMarginTop(3),
+        )
+            .wrapEditor(context, model, ProfileEnum.name, isNotLoggedIn)
+            .addMarginTop(3),
         Text(
           "${model.user.bio}",
           style: context.textTheme.headline6.copyWith(
             color: context.theme.primaryColor.withOpacity(0.87),
             fontWeight: FontWeight.w400,
           ),
-        ).wrapEditor(context, ProfileEnum.bio, isNotLoggedIn).addMarginTop(),
+        )
+            .wrapEditor(context, model, ProfileEnum.bio, isNotLoggedIn)
+            .addMarginTop(),
         ProfileInfoList(
-          user: model.user,
+          model: model,
+          isNotLoggedIn: isNotLoggedIn,
         ).addMarginTop(4),
       ],
     );
@@ -225,6 +230,7 @@ class _ProfilePageState extends State<ProfilePage> {
 extension WidgetExtension on Widget {
   Widget wrapEditor(
     BuildContext context,
+    ProfileViewModel model,
     ProfileEnum type,
     bool isNotLoggedIn,
   ) {
@@ -241,7 +247,89 @@ extension WidgetExtension on Widget {
         );
       },
       onLongPress: () {
-//        context.navigator.push
+        switch (type) {
+          case ProfileEnum.bio:
+            context.showEditDialog(
+              label: "YOUR SHORT BIO",
+              text: model.user.bio ?? "",
+              yesAction: (String text) {
+                final user = model.user;
+                user.bio = text;
+                model.user = user;
+                model.updateProfile();
+              },
+            );
+            break;
+          case ProfileEnum.intro:
+            context.showEditDialog(
+              label: "YOUR PROFESSIONAL SUMMARY",
+              text: model.user.intro ?? "",
+              yesAction: (String text) {
+                final user = model.user;
+                user.intro = text;
+                model.user = user;
+                model.updateProfile();
+              },
+            );
+            break;
+          case ProfileEnum.name:
+            context.showEditDialog(
+              label: "YOUR FIRST NAME",
+              text: model.user.firstName ?? "",
+              yesAction: (String firstName) {
+                context.showEditDialog(
+                  label: "YOUR LAST NAME",
+                  text: model.user.lastName ?? "",
+                  yesAction: (String lastName) {
+                    final user = model.user;
+                    user.firstName = firstName;
+                    user.lastName = lastName;
+                    model.user = user;
+                    model.updateProfile();
+                  },
+                );
+              },
+            );
+            break;
+          case ProfileEnum.github:
+            context.showEditDialog(
+              label: "YOUR GITHUB LINK",
+              text: model.user.github ?? "",
+              yesAction: (String text) {
+                final user = model.user;
+                user.github = text;
+                model.user = user;
+                model.updateProfile();
+              },
+            );
+            break;
+          case ProfileEnum.location:
+            context.showEditDialog(
+              label: "YOUR LOCATION",
+              text: model.user.location ?? "",
+              yesAction: (String text) {
+                final user = model.user;
+                user.location = text;
+                model.user = user;
+                model.updateProfile();
+              },
+            );
+            break;
+          case ProfileEnum.website:
+            context.showEditDialog(
+              label: "YOUR WEBSITE",
+              text: model.user.website ?? "",
+              yesAction: (String text) {
+                final user = model.user;
+                user.website = text;
+                model.user = user;
+                model.updateProfile();
+              },
+            );
+            break;
+          default:
+            break;
+        }
       },
       child: this,
     );

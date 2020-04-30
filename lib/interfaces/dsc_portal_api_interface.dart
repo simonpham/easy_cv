@@ -23,6 +23,8 @@ abstract class InterfaceDscPortalApi {
     Story company,
   );
 
+  Future<bool> updateProfile(DscUser user);
+
   Future<List<Story>> getUserExperience(String uid);
 
   Future<List<Story>> getUserEducation(String uid);

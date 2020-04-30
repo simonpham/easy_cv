@@ -135,6 +135,82 @@ extension ExtendedContext on BuildContext {
       },
     );
   }
+
+  Future showEditDialog({
+    String title,
+    String label,
+    String text,
+    Function yesAction,
+  }) {
+    final List<Widget> actions = [];
+    final textEditingController = TextEditingController(text: text ?? "");
+    if (yesAction != null) {
+      actions.addAll([
+        FlatButton(
+          child: Text("CANCEL"),
+          onPressed: () => this.pop(),
+        ),
+        FlatButton(
+          child: Text("OK"),
+          onPressed: () async {
+            await yesAction(textEditingController.text);
+            this.pop();
+          },
+        ),
+      ]);
+    } else {
+      actions.add(
+        FlatButton(
+          child: Text("OKAY"),
+          onPressed: () => this.pop(),
+        ),
+      );
+    }
+    return showDialog<void>(
+      context: this,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24.0),
+          ),
+          title: (title != null).ifTrue(
+            Text(
+              title?.toUpperCase() ?? "",
+            ),
+          ),
+          content: TextField(
+            textInputAction: TextInputAction.done,
+            onEditingComplete: () async {
+              context.hideKeyboard();
+            },
+            scrollPadding: EdgeInsets.zero,
+            controller: textEditingController,
+            decoration: InputDecoration(
+              hintText: "https://",
+              errorText: label ?? "",
+              errorStyle: TextStyle(
+                color: context.theme.primaryColor.withOpacity(0.7),
+              ),
+              counterText: "${textEditingController.text?.length ?? 0}/256",
+              counterStyle: TextStyle(
+                color: context.theme.primaryColor.withOpacity(0.7),
+              ),
+              hintStyle: TextStyle(
+                color: context.theme.primaryColor.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: context.theme.primaryColor.withOpacity(0.87),
+            ),
+            maxLength: 256,
+            maxLengthEnforced: true,
+          ),
+          actions: actions,
+        );
+      },
+    );
+  }
 }
 
 extension ExtendedBool on bool {
