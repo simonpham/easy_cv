@@ -5,6 +5,7 @@ import 'package:easy_cv/ui/widgets/profile_avatar.dart';
 import 'package:easy_cv/ui/widgets/profile_info_list.dart';
 import 'package:easy_cv/ui/widgets/section_item.dart';
 import 'package:easy_cv/ui/widgets/section_title.dart';
+import 'package:easy_cv/ui/widgets/tappable.dart';
 import 'package:easy_cv/utils/extensions.dart';
 import 'package:easy_cv/view_models/app_view_model.dart';
 import 'package:easy_cv/view_models/profile_view_model.dart';
@@ -43,19 +44,21 @@ class _ProfilePageState extends State<ProfilePage> {
       model: profileViewModel,
       child: ScopedModelDescendant<ProfileViewModel>(
         builder: (BuildContext context, _, ProfileViewModel model) {
+          bool _isNotLoggedIn = widget.viewModel == null ||
+              widget.viewModel.user?.uid != model.user?.uid;
           return Scaffold(
-            floatingActionButton: _buildFab(context, model),
+            floatingActionButton: _buildFab(context, model, _isNotLoggedIn),
             backgroundColor: Colors.white,
-            body: _buildBody(context, model),
+            body: _buildBody(context, model, _isNotLoggedIn),
           );
         },
       ),
     );
   }
 
-  FloatingActionButton _buildFab(BuildContext context, ProfileViewModel model) {
-    if (widget.viewModel == null ||
-        widget.viewModel.user?.uid != model.user?.uid) {
+  FloatingActionButton _buildFab(
+      BuildContext context, ProfileViewModel model, bool isNotLoggedIn) {
+    if (isNotLoggedIn) {
       return null;
     }
     return FloatingActionButton(
@@ -68,7 +71,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildBody(BuildContext context, ProfileViewModel model) {
+  Widget _buildBody(
+      BuildContext context, ProfileViewModel model, bool isNotLoggedIn) {
     if (model.user == null) {
       return SizedBox();
     }
@@ -81,8 +85,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 _buildProfileSummary(
                   context,
                   model,
+                  isNotLoggedIn,
                 ),
-                _buildSections(context, model),
+                _buildSections(
+                  context,
+                  model,
+                  isNotLoggedIn,
+                ),
               ],
             ).wrapWithContainer(maxWidth: sizeInfo.screenSize.width),
           );
@@ -94,11 +103,12 @@ class _ProfilePageState extends State<ProfilePage> {
               _buildProfileSummary(
                 context,
                 model,
+                isNotLoggedIn,
               ).wrapWithContainer(maxWidth: 300.0),
               _buildSpacer(sizeInfo),
               SingleChildScrollView(
                 padding: EdgeInsets.zero,
-                child: _buildSections(context, model),
+                child: _buildSections(context, model, isNotLoggedIn),
               ).expand(),
             ],
           ),
@@ -107,7 +117,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildSections(BuildContext context, ProfileViewModel model) {
+  Widget _buildSections(
+      BuildContext context, ProfileViewModel model, bool isNotLoggedIn) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -118,34 +129,35 @@ class _ProfilePageState extends State<ProfilePage> {
             color: context.theme.primaryColor.withOpacity(0.87),
             fontWeight: FontWeight.w400,
           ),
-        ),
+        ).wrapEditor(context, ProfileEnum.intro, isNotLoggedIn),
       ]
-        ..addAll(_getExperienceSection(context, model))
-        ..addAll(_getEducationSection(context, model)),
+        ..addAll(_getExperienceSection(context, model, isNotLoggedIn))
+        ..addAll(_getEducationSection(context, model, isNotLoggedIn)),
     ).addPaddingVertical(3);
   }
 
   List<Widget> _getExperienceSection(
-      BuildContext context, ProfileViewModel model) {
+      BuildContext context, ProfileViewModel model, isNotLoggedIn) {
     if (model.experience == null) {
       return [];
     }
     return [
       SectionTitle("Work Experience").addMarginTop(5),
-    ]..add(_buildStories(context, model.experience));
+    ]..add(_buildStories(context, model.experience, isNotLoggedIn));
   }
 
   List<Widget> _getEducationSection(
-      BuildContext context, ProfileViewModel model) {
+      BuildContext context, ProfileViewModel model, isNotLoggedIn) {
     if (model.education == null) {
       return [];
     }
     return [
       SectionTitle("Education").addMarginTop(5),
-    ]..add(_buildStories(context, model.education));
+    ]..add(_buildStories(context, model.education, isNotLoggedIn));
   }
 
-  Widget _buildProfileSummary(BuildContext context, ProfileViewModel model) {
+  Widget _buildProfileSummary(
+      BuildContext context, ProfileViewModel model, bool isNotLoggedIn) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -153,21 +165,23 @@ class _ProfilePageState extends State<ProfilePage> {
           size: 150,
           user: model.user,
           showRing: false,
-        ).addMarginTop(6),
+        )
+            .wrapEditor(context, ProfileEnum.avatar, isNotLoggedIn)
+            .addMarginTop(6),
         Text(
           "${model.user.firstName} ${model.user.lastName}",
           style: context.textTheme.headline4.copyWith(
             color: context.theme.primaryColor.withOpacity(0.87),
             fontWeight: FontWeight.bold,
           ),
-        ).addMarginTop(3),
+        ).wrapEditor(context, ProfileEnum.name, isNotLoggedIn).addMarginTop(3),
         Text(
           "${model.user.bio}",
           style: context.textTheme.headline6.copyWith(
             color: context.theme.primaryColor.withOpacity(0.87),
             fontWeight: FontWeight.w400,
           ),
-        ).addMarginTop(),
+        ).wrapEditor(context, ProfileEnum.bio, isNotLoggedIn).addMarginTop(),
         ProfileInfoList(
           user: model.user,
         ).addMarginTop(4),
@@ -182,7 +196,8 @@ class _ProfilePageState extends State<ProfilePage> {
     return const SizedBox(width: 64.0);
   }
 
-  Widget _buildStories(BuildContext context, List<Story> stories) {
+  Widget _buildStories(
+      BuildContext context, List<Story> stories, isNotLoggedIn) {
     final List<Widget> items = [];
     final length = stories.length;
     for (int position = 0; position < length; position++) {
@@ -197,10 +212,41 @@ class _ProfilePageState extends State<ProfilePage> {
         endDate: stories[position].endDate,
         isCurrent: stories[position].isCurrent,
         showDivider: position != 0,
+        isNotLoggedIn: isNotLoggedIn,
       ));
     }
     return Column(
       children: items,
     );
   }
+}
+
+extension WidgetExtension on Widget {
+  Widget wrapEditor(
+      BuildContext context, ProfileEnum type, bool isNotLoggedIn) {
+    if (isNotLoggedIn) {
+      return this;
+    }
+    return Tappable(
+      onTap: () {
+        // show toast: long press to edit
+      },
+      onLongPress: () {
+        // edit
+      },
+      child: this,
+    );
+  }
+}
+
+enum ProfileEnum {
+  avatar,
+  name,
+  bio,
+  location,
+  github,
+  website,
+  intro,
+  experience,
+  education,
 }

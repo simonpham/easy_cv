@@ -13,6 +13,7 @@ class SectionItem extends StatelessWidget {
   final int endDate;
   final bool showDivider;
   final bool isCurrent;
+  final bool isNotLoggedIn;
 
   const SectionItem({
     Key key,
@@ -26,6 +27,7 @@ class SectionItem extends StatelessWidget {
     this.endDate,
     this.showDivider,
     this.isCurrent,
+    this.isNotLoggedIn,
   }) : super(key: key);
 
   @override
