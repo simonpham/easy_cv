@@ -118,6 +118,7 @@ class DscPortalApiService implements InterfaceDscPortalApi {
     final List<Story> items = [];
     snapshot.documents.forEach((element) {
       final item = Story.fromMap(element.data);
+      item.id = element.documentID;
 
       if (items.isNotEmpty && items.first.startDate < item.startDate) {
         items.insert(0, item);
@@ -137,6 +138,7 @@ class DscPortalApiService implements InterfaceDscPortalApi {
     final List<Story> items = [];
     snapshot.documents.forEach((element) {
       final item = Story.fromMap(element.data);
+      item.id = element.documentID;
 
       if (items.isNotEmpty && items.first.startDate > item.startDate) {
         items.insert(0, item);

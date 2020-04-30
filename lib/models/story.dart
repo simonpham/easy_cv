@@ -1,4 +1,5 @@
 class Story {
+  String id;
   String title;
   String label;
   String degree;
@@ -10,6 +11,7 @@ class Story {
   bool isCurrent;
 
   Story({
+    this.id,
     this.title,
     this.label,
     this.degree,
