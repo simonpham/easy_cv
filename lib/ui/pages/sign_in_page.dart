@@ -1,25 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:easy_cv/constants/strings.dart';
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/pages/home_page.dart';
-import 'package:easy_cv/ui/widgets/logo.dart';
-
-import 'package:easy_cv/utils/extensions.dart';
-import 'package:easy_cv/utils/string_utils.dart';
 import 'package:easy_cv/ui/widgets/auth_hint.dart';
 import 'package:easy_cv/ui/widgets/loading_indicator.dart';
+import 'package:easy_cv/ui/widgets/logo.dart';
 import 'package:easy_cv/ui/widgets/sign_in_form.dart';
+import 'package:easy_cv/utils/extensions.dart';
+import 'package:easy_cv/utils/string_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SignInPage extends StatefulWidget {
-  static const String routeName = "/sign_in";
-
   @override
   _SignInPageState createState() => _SignInPageState();
 }
 
-final _emailController = TextEditingController(text: "simon@petpaw.app");
-final _passwordController = TextEditingController(text: "1234567");
+final _emailController = TextEditingController();
+final _passwordController = TextEditingController();
 
 class _SignInPageState extends State<SignInPage> {
   final _emailFocusNode = FocusNode();
@@ -155,7 +152,9 @@ class _SignInPageState extends State<SignInPage> {
       resetButtonState();
     });
     if (result) {
-      context.navigator.pushReplacementNamed(HomePage.routeName);
+      context.navigator.pushReplacement(
+        HomePage().route(context),
+      );
     }
   }
 

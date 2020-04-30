@@ -1,10 +1,12 @@
 import 'package:easy_cv/models/story.dart';
 import 'package:easy_cv/singleton_instances.dart';
+import 'package:easy_cv/ui/pages/add_story_page.dart';
 import 'package:easy_cv/ui/widgets/profile_avatar.dart';
 import 'package:easy_cv/ui/widgets/profile_info_list.dart';
 import 'package:easy_cv/ui/widgets/section_item.dart';
 import 'package:easy_cv/ui/widgets/section_title.dart';
 import 'package:easy_cv/utils/extensions.dart';
+import 'package:easy_cv/view_models/app_view_model.dart';
 import 'package:easy_cv/view_models/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -12,8 +14,13 @@ import 'package:scoped_model/scoped_model.dart';
 
 class ProfilePage extends StatefulWidget {
   final String profileName;
+  final AppViewModel viewModel;
 
-  const ProfilePage({Key key, this.profileName}) : super(key: key);
+  const ProfilePage({
+    Key key,
+    this.profileName,
+    this.viewModel,
+  }) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -23,7 +30,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    profileViewModel.loadProfile(widget.profileName).then((_) {
+    final username = widget.profileName ?? widget.viewModel?.user?.uid;
+    profileViewModel.loadProfile(username).then((_) {
       profileViewModel.loadExperience();
       profileViewModel.loadEducation();
     });
@@ -33,49 +41,69 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return ScopedModel<ProfileViewModel>(
       model: profileViewModel,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: ScopedModelDescendant<ProfileViewModel>(
-          builder: (BuildContext context, _, ProfileViewModel model) {
-            if (model.user == null) {
-              return SizedBox();
-            }
-            return ResponsiveBuilder(
-              builder: (BuildContext context, SizingInformation sizeInfo) {
-                if (sizeInfo.isMobile) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        _buildProfileSummary(
-                          context,
-                          model,
-                        ),
-                        _buildSections(context, model),
-                      ],
-                    ).wrapWithContainer(maxWidth: sizeInfo.screenSize.width),
-                  );
-                }
-                return Container(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      _buildProfileSummary(
-                        context,
-                        model,
-                      ).wrapWithContainer(maxWidth: 300.0),
-                      _buildSpacer(sizeInfo),
-                      SingleChildScrollView(
-                        padding: EdgeInsets.zero,
-                        child: _buildSections(context, model),
-                      ).expand(),
-                    ],
-                  ),
-                ).wrapWithContainer(maxWidth: 1024).center();
-              },
-            );
-          },
-        ),
+      child: ScopedModelDescendant<ProfileViewModel>(
+        builder: (BuildContext context, _, ProfileViewModel model) {
+          return Scaffold(
+            floatingActionButton: _buildFab(context, model),
+            backgroundColor: Colors.white,
+            body: _buildBody(context, model),
+          );
+        },
       ),
+    );
+  }
+
+  FloatingActionButton _buildFab(BuildContext context, ProfileViewModel model) {
+    if (widget.viewModel == null ||
+        widget.viewModel.user?.uid != model.user?.uid) {
+      return null;
+    }
+    return FloatingActionButton(
+      onPressed: () {
+        context.navigator.push(
+          AddStoryPage().route(context),
+        );
+      },
+      child: Icon(Icons.add),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, ProfileViewModel model) {
+    if (model.user == null) {
+      return SizedBox();
+    }
+    return ResponsiveBuilder(
+      builder: (BuildContext context, SizingInformation sizeInfo) {
+        if (sizeInfo.isMobile) {
+          return SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                _buildProfileSummary(
+                  context,
+                  model,
+                ),
+                _buildSections(context, model),
+              ],
+            ).wrapWithContainer(maxWidth: sizeInfo.screenSize.width),
+          );
+        }
+        return Container(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildProfileSummary(
+                context,
+                model,
+              ).wrapWithContainer(maxWidth: 300.0),
+              _buildSpacer(sizeInfo),
+              SingleChildScrollView(
+                padding: EdgeInsets.zero,
+                child: _buildSections(context, model),
+              ).expand(),
+            ],
+          ),
+        ).wrapWithContainer(maxWidth: 1024).center();
+      },
     );
   }
 

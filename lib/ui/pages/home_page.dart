@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class HomePage extends StatelessWidget {
-  static const String routeName = "/home_page";
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +13,7 @@ class HomePage extends StatelessWidget {
         if (model.isSignedIn) {
           return ProfilePage(
             profileName: model.user.username,
+            viewModel: model,
           );
         }
         return BeginPage();
