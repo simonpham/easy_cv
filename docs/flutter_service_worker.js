@@ -8,12 +8,13 @@ const RESOURCES = {
 "assets/assets/fonts/raleway_regular.otf": "a9ee3958efed8e067a30a930acdbd240",
 "assets/assets/fonts/raleway_bold.otf": "244be40721eb433d88f76217952fd125",
 "assets/assets/fonts/raleway_italic.otf": "28b3a87f6d6aef2382e0381709fd2dd2",
+"assets/assets/images/profile.png": "b12608f35e80b280e5a8f5582bf44673",
 "assets/FontManifest.json": "e4a867829087477bd3b8009f15a7e554",
 "assets/fonts/MaterialIcons-Regular.ttf": "56d3ffdef7a25659eab6a68a3fbfaf16",
-"assets/AssetManifest.json": "e192a755ce646cdd9559967aea17aa1e",
+"assets/AssetManifest.json": "a0530f61a3e2572252840b96ed9a6ae7",
 "assets/LICENSE": "96ff26554f63c03c0a0646c1c28ddbca",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
-"main.dart.js": "8faf2ee1c29709a57386b034ad1a9454",
+"main.dart.js": "267ee04580c7ef96d96dff49b21250c7",
 "manifest.json": "557461b0bf7c545fc2cb824b29a134ef",
 "CNAME": "441ca8a0a0457ec53cf51c899a46aba5"
 };
