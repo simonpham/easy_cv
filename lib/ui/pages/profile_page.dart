@@ -1,6 +1,7 @@
 import 'package:easy_cv/models/story.dart';
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/pages/add_story_page.dart';
+import 'package:easy_cv/ui/pages/story_edit_page.dart';
 import 'package:easy_cv/ui/widgets/profile_avatar.dart';
 import 'package:easy_cv/ui/widgets/profile_info_list.dart';
 import 'package:easy_cv/ui/widgets/section_item.dart';
@@ -183,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
     return [
       SectionTitle("Work Experience").addMarginTop(5),
-    ]..add(_buildStories(context, model.experience, isNotLoggedIn));
+    ]..add(_buildStories(context, model, StoryType.company, isNotLoggedIn));
   }
 
   List<Widget> _getEducationSection(
@@ -193,7 +194,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
     return [
       SectionTitle("Education").addMarginTop(5),
-    ]..add(_buildStories(context, model.education, isNotLoggedIn));
+    ]..add(_buildStories(context, model, StoryType.school, isNotLoggedIn));
   }
 
   Widget _buildProfileSummary(
@@ -241,24 +242,39 @@ class _ProfilePageState extends State<ProfilePage> {
     return const SizedBox(width: 64.0);
   }
 
-  Widget _buildStories(
-      BuildContext context, List<Story> stories, isNotLoggedIn) {
+  Widget _buildStories(BuildContext context, ProfileViewModel model,
+      StoryType storyType, isNotLoggedIn) {
     final List<Widget> items = [];
+    final stories = (storyType == StoryType.school).ifTrue(
+      model.education,
+      model.experience,
+    );
     final length = stories.length;
     for (int position = 0; position < length; position++) {
-      items.add(SectionItem(
-        title: stories[position].title,
-        label: stories[position].label,
-        degree: stories[position].degree,
-        company: stories[position].company,
-        location: stories[position].location,
-        summary: stories[position].summary,
-        startDate: stories[position].startDate,
-        endDate: stories[position].endDate,
-        isCurrent: stories[position].isCurrent,
-        showDivider: position != 0,
-        isNotLoggedIn: isNotLoggedIn,
-      ));
+      items.add(
+        SectionItem(
+          title: stories[position].title,
+          label: stories[position].label,
+          degree: stories[position].degree,
+          company: stories[position].company,
+          location: stories[position].location,
+          summary: stories[position].summary,
+          startDate: stories[position].startDate,
+          endDate: stories[position].endDate,
+          isCurrent: stories[position].isCurrent,
+          showDivider: position != 0,
+          isNotLoggedIn: isNotLoggedIn,
+        ).wrapEditor(
+          context,
+          model,
+          (storyType == StoryType.school).ifTrue(
+            ProfileEnum.education,
+            ProfileEnum.experience,
+          ),
+          isNotLoggedIn,
+          story: stories[position],
+        ),
+      );
     }
     return Column(
       children: items,
@@ -271,8 +287,9 @@ extension WidgetExtension on Widget {
     BuildContext context,
     ProfileViewModel model,
     ProfileEnum type,
-    bool isNotLoggedIn,
-  ) {
+    bool isNotLoggedIn, {
+    Story story,
+  }) {
     if (isNotLoggedIn) {
       return this;
     }
@@ -364,6 +381,24 @@ extension WidgetExtension on Widget {
                 model.user = user;
                 model.updateProfile();
               },
+            );
+            break;
+          case ProfileEnum.education:
+            storyEditViewModel.initSchool(story);
+            context.navigator.push(
+              StoryEditPage(
+                type: StoryType.school,
+                profileModel: model,
+              ).route(context),
+            );
+            break;
+          case ProfileEnum.experience:
+            storyEditViewModel.initCompany(story);
+            context.navigator.push(
+              StoryEditPage(
+                type: StoryType.company,
+                profileModel: model,
+              ).route(context),
             );
             break;
           default:
