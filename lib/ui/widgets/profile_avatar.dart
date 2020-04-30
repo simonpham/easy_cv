@@ -57,9 +57,12 @@ class ProfileAvatar extends StatelessWidget {
 
   Widget _getImage() {
     if (user?.profilePicUrl == null || user.profilePicUrl.isEmpty) {
-      return Image(
-        image: Images.profile,
-        fit: BoxFit.cover,
+      return Container(
+        color: Colors.grey[300],
+        child: Image(
+          image: Images.profile,
+          fit: BoxFit.cover,
+        ),
       );
     }
     return ImageView(
