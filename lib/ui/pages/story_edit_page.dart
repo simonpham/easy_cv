@@ -5,6 +5,7 @@ import 'package:easy_cv/view_models/profile_view_model.dart';
 import 'package:easy_cv/view_models/story_edit_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class StoryEditPage extends StatelessWidget {
@@ -433,18 +434,39 @@ class StoryEditPage extends StatelessWidget {
     ];
   }
 
-  _handleSaveButtonPressed(BuildContext context, StoryEditViewModel model) async {
+  _handleSaveButtonPressed(
+      BuildContext context, StoryEditViewModel model) async {
     if (type == StoryType.school) {
       final school = model.exportSchool();
-      await profileModel.updateSchool(school);
+      if (await profileModel.updateSchool(school) == true) {
+        Fluttertoast.showToast(
+          msg: "Added successfully!",
+          backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+          textColor: Colors.white,
+        );
+        context.pop();
+        return;
+      }
     }
 
     if (type == StoryType.company) {
       final company = model.exportCompany();
-      await profileModel.updateCompany(company);
+      if (await profileModel.updateCompany(company) == true) {
+        Fluttertoast.showToast(
+          msg: "Edited successfully!",
+          backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+          textColor: Colors.white,
+        );
+        context.pop();
+        return;
+      }
     }
 
-    context.pop();
+    Fluttertoast.showToast(
+      msg: "Failed!",
+      backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+      textColor: Colors.white,
+    );
   }
 }
 

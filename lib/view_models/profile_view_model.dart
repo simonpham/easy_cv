@@ -90,10 +90,17 @@ class ProfileViewModel extends Model {
       });
       if (schoolToUpdate == null) {
         // add new school
-        await apiSvc?.addSchool(user, school);
+        final success = await apiSvc?.addSchool(user, school);
+        if (success == true) {
+          education.insert(0, school);
+        }
       } else {
         // update current school
-        await apiSvc?.updateSchool(user, school);
+        final success = await apiSvc?.updateSchool(user, school);
+        if (success == true) {
+          education.removeWhere((item) => item.id == school.id);
+          education.insert(0, school);
+        }
       }
       return true;
     } catch (error) {
@@ -110,10 +117,17 @@ class ProfileViewModel extends Model {
       });
       if (companyToUpdate == null) {
         // add new school
-        await apiSvc?.addCompany(user, company);
+        final success = await apiSvc?.addCompany(user, company);
+        if (success == true) {
+          education.insert(0, company);
+        }
       } else {
         // update current school
-        await apiSvc?.updateCompany(user, company);
+        final success = await apiSvc?.updateCompany(user, company);
+        if (success == true) {
+          experience.removeWhere((item) => item.id == company.id);
+          experience.insert(0, company);
+        }
       }
       return true;
     } catch (error) {
