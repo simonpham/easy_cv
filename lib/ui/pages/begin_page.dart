@@ -10,8 +10,9 @@ import 'package:scoped_model/scoped_model.dart';
 
 const _maxNameLength = 32;
 const _maxBioLength = 100;
+const _maxIntroLength = 300;
 const _navigateButtonsHeight = 100.0;
-const pageLength = 9;
+const pageLength = 10;
 
 class BeginPage extends StatelessWidget {
   @override
@@ -27,6 +28,7 @@ class BeginPage extends StatelessWidget {
               PageLocation(model),
               PageEmail(model),
               PageBio(model),
+              PageIntro(model),
               PageEducation(model),
               PageExperience(model),
               PageUsername(model),
@@ -118,18 +120,23 @@ Future _handleNextPage(
       }
       break;
     case 5:
-      if (model.school.isEmpty || model.major.isEmpty) {
+      if (model.intro.isEmpty) {
         isNextEnable = false;
       }
       break;
     case 6:
+      if (model.school.isEmpty || model.major.isEmpty) {
+        isNextEnable = false;
+      }
+      break;
+    case 7:
       if (model.company.isEmpty ||
           model.position.isEmpty ||
           model.companyLocation.isEmpty) {
         isNextEnable = false;
       }
       break;
-    case 7:
+    case 8:
       if (model.username.isEmpty ||
           !model.username.validate(RegexUtils.username)) {
         isNextEnable = false;
@@ -460,7 +467,7 @@ class PageBio extends StatelessWidget {
             textInputAction: TextInputAction.next,
             onEditingComplete: () async {
               await _handleNextPage(context, model);
-              model.schoolFocusNode.requestFocus();
+              model.introFocusNode.requestFocus();
             },
             controller: model.bioTextController,
             decoration: InputDecoration(
@@ -484,6 +491,64 @@ class PageBio extends StatelessWidget {
             maxLength: _maxBioLength,
             maxLengthEnforced: true,
             onChanged: (text) => model.bio = model.bioTextController.text,
+          ).addMarginTop(),
+          Container().expand(),
+          SizedBox(height: _navigateButtonsHeight),
+        ],
+      ).addPaddingHorizontal(3).addPaddingVertical(3).wrapSafeArea(),
+    );
+  }
+}
+
+class PageIntro extends StatelessWidget {
+  final BeginViewModel model;
+
+  const PageIntro(this.model, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.deepPurple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "How do you describe yourself?",
+            style: context.textTheme.headline5.copyWith(
+              color: Colors.white.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+          ).addMarginTop(),
+          Container().expand(),
+          TextField(
+            focusNode: model.introFocusNode,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () async {
+              await _handleNextPage(context, model);
+              model.schoolFocusNode.requestFocus();
+            },
+            controller: model.introTextController,
+            decoration: InputDecoration(
+              hintText: "I am..",
+              errorText: "YOUR PROFESSIONAL SUMMARY",
+              errorStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              counterText: "${model.intro?.length ?? 0}/$_maxIntroLength",
+              counterStyle: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+              ),
+              hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: context.textTheme.headline6.copyWith(
+              color: Colors.white.withOpacity(0.87),
+            ),
+            maxLength: _maxBioLength,
+            maxLengthEnforced: true,
+            onChanged: (text) => model.intro = model.introTextController.text,
           ).addMarginTop(),
           Container().expand(),
           SizedBox(height: _navigateButtonsHeight),
@@ -829,6 +894,7 @@ class PagePassword extends StatelessWidget {
                         model.location,
                         model.bio,
                         model.username,
+                        model.intro,
                       );
                     },
                   );

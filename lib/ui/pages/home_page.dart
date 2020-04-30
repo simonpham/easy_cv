@@ -14,6 +14,10 @@ class HomePage extends StatelessWidget {
         if (model.isSignedIn) {
           return Container(
             color: context.theme.primaryColor,
+            child: RaisedButton(
+              onPressed: () => model.signOut(),
+              child: Text("OK"),
+            ).center(),
           );
         }
         return BeginPage();

@@ -11,8 +11,15 @@ abstract class InterfaceDscPortalApi {
 
   Future<String> getUidFromUsername(String username);
 
-  Future<DscUser> updateUser(FirebaseUser user, String firstName,
-      String lastName, String location, String bio, String username);
+  Future<DscUser> updateUser(
+    FirebaseUser user,
+    String firstName,
+    String lastName,
+    String location,
+    String bio,
+    String username,
+    String intro,
+  );
 
   Future<List<Story>> getUserExperience(String uid);
 

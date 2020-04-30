@@ -43,6 +43,7 @@ class DscPortalApiService implements InterfaceDscPortalApi {
     String location,
     String bio,
     String username,
+    String intro,
   ) async {
     final CollectionReference ref = firestore.collection('users');
 
@@ -56,6 +57,7 @@ class DscPortalApiService implements InterfaceDscPortalApi {
       'last_name': lastName,
       'location': location,
       'bio': bio,
+      'intro': intro,
     };
     await ref.document(user.uid).setData(newData, merge: true);
 

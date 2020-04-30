@@ -10,6 +10,7 @@ class BeginViewModel extends Model {
     locationTextController = TextEditingController();
     emailTextController = TextEditingController();
     bioTextController = TextEditingController();
+    introTextController = TextEditingController();
     usernameTextController = TextEditingController();
     passwordTextController = TextEditingController();
     schoolTextController = TextEditingController();
@@ -22,6 +23,7 @@ class BeginViewModel extends Model {
     locationFocusNode = FocusNode();
     emailFocusNode = FocusNode();
     bioFocusNode = FocusNode();
+    introFocusNode = FocusNode();
     usernameFocusNode = FocusNode();
     passwordFocusNode = FocusNode();
     schoolFocusNode = FocusNode();
@@ -34,6 +36,7 @@ class BeginViewModel extends Model {
     location = "";
     email = "";
     bio = "";
+    intro = "";
     username = "";
     password = "";
     school = "";
@@ -198,6 +201,34 @@ class BeginViewModel extends Model {
 
   set bio(String value) {
     _bio = value;
+    notifyListeners();
+  }
+
+  /// Intro
+  TextEditingController _introTextController;
+
+  TextEditingController get introTextController => _introTextController;
+
+  set introTextController(TextEditingController value) {
+    _introTextController = value;
+    notifyListeners();
+  }
+
+  FocusNode _introFocusNode;
+
+  FocusNode get introFocusNode => _introFocusNode;
+
+  set introFocusNode(FocusNode value) {
+    _introFocusNode = value;
+    notifyListeners();
+  }
+
+  String _intro;
+
+  String get intro => _intro;
+
+  set intro(String value) {
+    _intro = value;
     notifyListeners();
   }
 

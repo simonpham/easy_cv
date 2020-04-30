@@ -36,13 +36,14 @@ class AppViewModel extends Model {
     String lastName,
     String location,
     String bio,
-    String username, {
+    String username,
+    String intro, {
     Function onError,
   }) async {
     try {
       final result = await apiSvc?.signUpWithEmailPassword(email, password);
       user = await apiSvc?.updateUser(
-          result.user, firstName, lastName, location, bio, username);
+          result.user, firstName, lastName, location, bio, username, intro);
     } catch (error) {
       if (onError != null) {
         onError(error);
