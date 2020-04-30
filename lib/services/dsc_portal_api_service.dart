@@ -94,6 +94,42 @@ class DscPortalApiService implements InterfaceDscPortalApi {
   }
 
   @override
+  Future<bool> updateSchool(DscUser user, Story school) async {
+    await firestore
+        .collection("users/${user.uid}/education")
+        .document(school.id)
+        .setData(
+          school.toMap(),
+          merge: true,
+        );
+  }
+
+  @override
+  Future<bool> updateCompany(DscUser user, Story company) async {
+    await firestore
+        .collection("users/${user.uid}/experience")
+        .document(company.id)
+        .setData(
+          company.toMap(),
+          merge: true,
+        );
+  }
+
+  @override
+  Future<bool> addSchool(DscUser user, Story school) async {
+    await firestore.collection("users/${user.uid}/education").add(
+          school.toMap(),
+        );
+  }
+
+  @override
+  Future<bool> addCompany(DscUser user, Story company) async {
+    await firestore.collection("users/${user.uid}/experience").add(
+          company.toMap(),
+        );
+  }
+
+  @override
   Future<void> signOut() {
     return firebaseAuth.signOut();
   }
@@ -120,14 +156,11 @@ class DscPortalApiService implements InterfaceDscPortalApi {
       final item = Story.fromMap(element.data);
       item.id = element.documentID;
 
-      if (items.isNotEmpty && items.first.startDate < item.startDate) {
-        items.insert(0, item);
-      } else {
-        items.add(
-          item,
-        );
-      }
+      items.add(
+        item,
+      );
     });
+    items.sort((Story a, Story b) => (b?.startDate ?? 0) - (a?.startDate ?? 0));
     return items;
   }
 
@@ -140,14 +173,11 @@ class DscPortalApiService implements InterfaceDscPortalApi {
       final item = Story.fromMap(element.data);
       item.id = element.documentID;
 
-      if (items.isNotEmpty && items.first.startDate > item.startDate) {
-        items.insert(0, item);
-      } else {
-        items.add(
-          item,
-        );
-      }
+      items.add(
+        item,
+      );
     });
+    items.sort((Story a, Story b) => (b?.startDate ?? 0) - (a?.startDate ?? 0));
     return items;
   }
 }

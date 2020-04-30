@@ -232,6 +232,8 @@ class StoryEditViewModel extends Model {
     String position,
     String companyLocation,
     String summary,
+    int startDate,
+    int endDate,
   }) {
     locationTextController = TextEditingController(text: location ?? "");
     locationFocusNode = FocusNode();
@@ -262,8 +264,8 @@ class StoryEditViewModel extends Model {
     summaryFocusNode = FocusNode();
     this.summary = summary ?? "";
 
-    this.startDate = DateTime.now().millisecondsSinceEpoch;
-    this.endDate = DateTime.now().millisecondsSinceEpoch;
+    this.startDate = startDate ?? DateTime.now().millisecondsSinceEpoch;
+    this.endDate = endDate ?? DateTime.now().millisecondsSinceEpoch;
   }
 
   void initSchool(Story story) {
@@ -272,6 +274,8 @@ class StoryEditViewModel extends Model {
       school: story.company,
       major: story.title,
       summary: story.summary,
+      startDate: story.startDate,
+      endDate: story.endDate,
     );
   }
 
@@ -281,6 +285,30 @@ class StoryEditViewModel extends Model {
       company: story.company,
       position: story.title,
       summary: story.summary,
+      startDate: story.startDate,
+      endDate: story.endDate,
+    );
+  }
+
+  Story exportSchool() {
+    return Story(
+      location: location,
+      company: school,
+      title: major,
+      summary: summary,
+      startDate: startDate,
+      endDate: endDate,
+    );
+  }
+
+  Story exportCompany() {
+    return Story(
+      location: location,
+      company: company,
+      title: position,
+      summary: summary,
+      startDate: startDate,
+      endDate: endDate,
     );
   }
 }

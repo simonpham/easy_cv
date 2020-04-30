@@ -80,4 +80,44 @@ class ProfileViewModel extends Model {
       return false;
     }
   }
+
+  Future<bool> updateSchool(Story school) async {
+    try {
+      final schoolToUpdate = education.firstWhere((item) {
+        return item.id == school.id;
+      }, orElse: () {
+        return null;
+      });
+      if (schoolToUpdate == null) {
+        // add new school
+        await apiSvc?.addSchool(user, school);
+      } else {
+        // update current school
+        await apiSvc?.updateSchool(user, school);
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  Future<bool> updateCompany(Story company) async {
+    try {
+      final companyToUpdate = experience.firstWhere((item) {
+        return item.id == company.id;
+      }, orElse: () {
+        return null;
+      });
+      if (companyToUpdate == null) {
+        // add new school
+        await apiSvc?.addCompany(user, company);
+      } else {
+        // update current school
+        await apiSvc?.updateCompany(user, company);
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }

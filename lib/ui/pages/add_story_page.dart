@@ -41,6 +41,7 @@ class AddStoryPage extends StatelessWidget {
                                 storyEditViewModel.reset();
                                 context.navigator.push(
                                   StoryEditPage(
+                                    profileModel: model,
                                     type: StoryType.school,
                                   ).route(context),
                                 );
@@ -53,6 +54,7 @@ class AddStoryPage extends StatelessWidget {
                                 storyEditViewModel.reset();
                                 context.navigator.push(
                                   StoryEditPage(
+                                    profileModel: model,
                                     type: StoryType.company,
                                   ).route(context),
                                 );
@@ -111,7 +113,10 @@ class AddStoryPage extends StatelessWidget {
                         ).addMarginTop(1),
                       ],
                     ),
-                  ).addPaddingHorizontal(2).addPaddingVertical(2).wrapSafeArea(),
+                  )
+                      .addPaddingHorizontal(2)
+                      .addPaddingVertical(2)
+                      .wrapSafeArea(),
                 );
               },
             ),

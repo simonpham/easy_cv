@@ -1,17 +1,20 @@
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/widgets/tappable.dart';
 import 'package:easy_cv/utils/extensions.dart';
+import 'package:easy_cv/view_models/profile_view_model.dart';
 import 'package:easy_cv/view_models/story_edit_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class StoryEditPage extends StatelessWidget {
+  final ProfileViewModel profileModel;
   final StoryType type;
 
   const StoryEditPage({
     Key key,
     this.type,
+    this.profileModel,
   }) : super(key: key);
 
   @override
@@ -30,7 +33,8 @@ class StoryEditPage extends StatelessWidget {
               actions: <Widget>[
                 FlatButton(
                   colorBrightness: Brightness.dark,
-                  onPressed: () {},
+                  onPressed: () => _handleSaveButtonPressed(context, model),
+                  disabledTextColor: Colors.white38,
                   child: Text("Save"),
                 ),
               ],
@@ -370,7 +374,9 @@ class StoryEditPage extends StatelessWidget {
             onConfirm: (DateTime date) {
               model.startDate = date.millisecondsSinceEpoch;
             },
-            currentTime: DateTime.now(),
+            currentTime: DateTime.fromMillisecondsSinceEpoch(
+              model.startDate ?? DateTime.now().millisecondsSinceEpoch,
+            ),
           );
         },
         child: TextField(
@@ -401,7 +407,9 @@ class StoryEditPage extends StatelessWidget {
             onConfirm: (DateTime date) {
               model.endDate = date.millisecondsSinceEpoch;
             },
-            currentTime: DateTime.now(),
+            currentTime: DateTime.fromMillisecondsSinceEpoch(
+              model.endDate ?? DateTime.now().millisecondsSinceEpoch,
+            ),
           );
         },
         child: TextField(
@@ -423,6 +431,20 @@ class StoryEditPage extends StatelessWidget {
         ),
       ).addMarginTop(),
     ];
+  }
+
+  _handleSaveButtonPressed(BuildContext context, StoryEditViewModel model) async {
+    if (type == StoryType.school) {
+      final school = model.exportSchool();
+      await profileModel.updateSchool(school);
+    }
+
+    if (type == StoryType.company) {
+      final company = model.exportCompany();
+      await profileModel.updateCompany(company);
+    }
+
+    context.pop();
   }
 }
 

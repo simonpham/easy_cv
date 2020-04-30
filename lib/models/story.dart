@@ -29,10 +29,23 @@ class Story {
     degree = map['degree'];
     company = map['company'];
     location = map['location'];
-    company = map['company'];
     summary = map['summary'];
     isCurrent = map['is_current'];
     startDate = map['start_date'];
     endDate = map['end_date'];
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'label': label,
+      'degree': degree,
+      'company': company,
+      'location': location,
+      'summary': summary,
+      'is_current': isCurrent,
+      'start_date': startDate,
+      'end_date': endDate,
+    };
   }
 }
