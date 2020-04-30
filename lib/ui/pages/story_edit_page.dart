@@ -1,4 +1,5 @@
 import 'package:easy_cv/singleton_instances.dart';
+import 'package:easy_cv/ui/pages/home_page.dart';
 import 'package:easy_cv/ui/widgets/tappable.dart';
 import 'package:easy_cv/utils/extensions.dart';
 import 'package:easy_cv/view_models/profile_view_model.dart';
@@ -445,6 +446,8 @@ class StoryEditPage extends StatelessWidget {
           textColor: Colors.white,
         );
         context.pop();
+        context.pop();
+        context.navigator.pushReplacement(HomePage().route(context));
         return;
       }
     }
@@ -458,6 +461,8 @@ class StoryEditPage extends StatelessWidget {
           textColor: Colors.white,
         );
         context.pop();
+        context.pop();
+        context.navigator.pushReplacement(HomePage().route(context));
         return;
       }
     }

@@ -93,6 +93,7 @@ class ProfileViewModel extends Model {
         final success = await apiSvc?.addSchool(user, school);
         if (success == true) {
           education.insert(0, school);
+          notifyListeners();
         }
       } else {
         // update current school
@@ -100,6 +101,7 @@ class ProfileViewModel extends Model {
         if (success == true) {
           education.removeWhere((item) => item.id == school.id);
           education.insert(0, school);
+          notifyListeners();
         }
       }
       return true;
@@ -119,7 +121,8 @@ class ProfileViewModel extends Model {
         // add new school
         final success = await apiSvc?.addCompany(user, company);
         if (success == true) {
-          education.insert(0, company);
+          experience.insert(0, company);
+          notifyListeners();
         }
       } else {
         // update current school
@@ -127,6 +130,7 @@ class ProfileViewModel extends Model {
         if (success == true) {
           experience.removeWhere((item) => item.id == company.id);
           experience.insert(0, company);
+          notifyListeners();
         }
       }
       return true;

@@ -303,7 +303,7 @@ class StoryEditViewModel extends Model {
 
   Story exportCompany() {
     return Story(
-      location: location,
+      location: companyLocation,
       company: company,
       title: position,
       summary: summary,
