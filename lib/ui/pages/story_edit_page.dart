@@ -1,3 +1,4 @@
+import 'package:easy_cv/main.dart';
 import 'package:easy_cv/singleton_instances.dart';
 import 'package:easy_cv/ui/pages/home_page.dart';
 import 'package:easy_cv/ui/widgets/tappable.dart';
@@ -466,8 +467,7 @@ class StoryEditPage extends StatelessWidget {
               backgroundColor: context.theme.primaryColor.withOpacity(0.9),
               textColor: Colors.white,
             );
-            context.pop();
-            context.navigator.pushReplacement(HomePage().route(context));
+            EasyCv.restartApp(context);
             return;
           }
 
@@ -492,9 +492,7 @@ class StoryEditPage extends StatelessWidget {
                 backgroundColor: context.theme.primaryColor.withOpacity(0.9),
                 textColor: Colors.white,
               );
-              context.pop();
-              context.pop();
-              context.navigator.pushReplacement(HomePage().route(context));
+              EasyCv.restartApp(context);
               return;
             }
           }
@@ -507,9 +505,7 @@ class StoryEditPage extends StatelessWidget {
                 backgroundColor: context.theme.primaryColor.withOpacity(0.9),
                 textColor: Colors.white,
               );
-              context.pop();
-              context.pop();
-              context.navigator.pushReplacement(HomePage().route(context));
+              EasyCv.restartApp(context);
               return;
             }
           }

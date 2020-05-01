@@ -13,7 +13,24 @@ Future<void> main() async {
   runApp(EasyCv());
 }
 
-class EasyCv extends StatelessWidget {
+class EasyCv extends StatefulWidget {
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_EasyCvState>().restartApp();
+  }
+
+  @override
+  _EasyCvState createState() => _EasyCvState();
+}
+
+class _EasyCvState extends State<EasyCv> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModel<AppViewModel>(
@@ -24,6 +41,7 @@ class EasyCv extends StatelessWidget {
           context.hideKeyboard();
         },
         child: MaterialApp(
+          key: key,
           themeMode: ThemeMode.light,
           title: "Easy CV",
           theme: appTheme,
