@@ -30,9 +30,9 @@ abstract class InterfaceDscPortalApi {
 
   Future<bool> updateCompany(DscUser user, Story company);
 
-  Future<bool> addSchool(DscUser user, Story school);
+  Future<String> addSchool(DscUser user, Story school);
 
-  Future<bool> addCompany(DscUser user, Story company);
+  Future<String> addCompany(DscUser user, Story company);
 
   Future<bool> deleteStory(DscUser user, Story story, StoryType storyType);
 

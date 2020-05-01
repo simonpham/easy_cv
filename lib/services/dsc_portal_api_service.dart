@@ -120,19 +120,19 @@ class DscPortalApiService implements InterfaceDscPortalApi {
   }
 
   @override
-  Future<bool> addSchool(DscUser user, Story school) async {
-    await firestore.collection("users/${user.uid}/education").add(
+  Future<String> addSchool(DscUser user, Story school) async {
+    final doc = await firestore.collection("users/${user.uid}/education").add(
           school.toMap(),
         );
-    return true;
+    return doc.documentID;
   }
 
   @override
-  Future<bool> addCompany(DscUser user, Story company) async {
-    await firestore.collection("users/${user.uid}/experience").add(
+  Future<String> addCompany(DscUser user, Story company) async {
+    final doc = await firestore.collection("users/${user.uid}/experience").add(
           company.toMap(),
         );
-    return true;
+    return doc.documentID;
   }
 
   @override

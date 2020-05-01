@@ -101,8 +101,9 @@ class ProfileViewModel extends Model {
       });
       if (schoolToUpdate == null) {
         // add new school
-        final success = await apiSvc?.addSchool(user, school);
-        if (success == true) {
+        final docId = await apiSvc?.addSchool(user, school);
+        if (docId != null && docId.isNotEmpty) {
+          school.id = docId;
           education.insert(0, school);
           notifyListeners();
         }
@@ -130,8 +131,9 @@ class ProfileViewModel extends Model {
       });
       if (companyToUpdate == null) {
         // add new school
-        final success = await apiSvc?.addCompany(user, company);
-        if (success == true) {
+        final docId = await apiSvc?.addCompany(user, company);
+        if (docId != null && docId.isNotEmpty) {
+          company.id = docId;
           experience.insert(0, company);
           notifyListeners();
         }

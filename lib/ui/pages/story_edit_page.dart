@@ -492,7 +492,8 @@ class StoryEditPage extends StatelessWidget {
                 backgroundColor: context.theme.primaryColor.withOpacity(0.9),
                 textColor: Colors.white,
               );
-              context.navigator.popUntil((route) => !route.navigator.canPop());
+              context.pop();
+              context.pop();
               context.navigator.pushReplacement(HomePage().route(context));
               return;
             }
@@ -506,7 +507,8 @@ class StoryEditPage extends StatelessWidget {
                 backgroundColor: context.theme.primaryColor.withOpacity(0.9),
                 textColor: Colors.white,
               );
-              context.navigator.popUntil((route) => !route.navigator.canPop());
+              context.pop();
+              context.pop();
               context.navigator.pushReplacement(HomePage().route(context));
               return;
             }
