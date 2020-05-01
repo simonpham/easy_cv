@@ -44,6 +44,7 @@ class BeginViewModel extends Model {
     company = "";
     position = "";
     companyLocation = "";
+    isWaiting = false;
   }
 
   PageController _mainPageController;
@@ -426,6 +427,16 @@ class BeginViewModel extends Model {
 
   set companyLocation(String value) {
     _companyLocation = value;
+    notifyListeners();
+  }
+
+  /// for blocking clicks when signing up
+  bool _isWaiting;
+
+  bool get isWaiting => _isWaiting;
+
+  set isWaiting(bool value) {
+    _isWaiting = value;
     notifyListeners();
   }
 }

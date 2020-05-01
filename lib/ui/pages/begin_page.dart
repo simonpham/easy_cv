@@ -883,10 +883,11 @@ class PagePassword extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                onPressed: () {
+                onPressed: (model.isWaiting != true).ifTrue(() {
                   context.showAlertDialog(
                     message: "Are you sure to sign up?",
                     yesAction: () {
+                      model.isWaiting = true;
                       final Story school = Story(
                         degree: model.major,
                         company: model.school,
@@ -910,7 +911,7 @@ class PagePassword extends StatelessWidget {
                       );
                     },
                   );
-                },
+                }, null),
               ).expand()
             ],
           ),

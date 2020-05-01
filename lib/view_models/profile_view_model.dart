@@ -39,12 +39,15 @@ class ProfileViewModel extends Model {
   }
 
   Future<String> refreshAvatarLink() async {
-    final ref = firebaseStorage.ref().child("profile_photos/${user.uid}");
-    final url = await ref.getDownloadURL();
-    user.profilePicUrl = url;
-    await this.updateProfile();
-    notifyListeners();
-    return url;
+    try {
+      final ref = firebaseStorage.ref().child("profile_photos/${user.uid}");
+      final url = await ref.getDownloadURL();
+      user.profilePicUrl = url;
+      await this.updateProfile();
+      notifyListeners();
+      return url;
+    } catch (err) {}
+    return null;
   }
 
   Future<bool> loadProfile([String username]) async {
