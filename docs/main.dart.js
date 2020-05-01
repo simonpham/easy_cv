@@ -31100,7 +31100,7 @@ X.Ur.prototype={
 $0:function(){},
 $S:0}
 X.Uq.prototype={
-$0:function(){S.a0n("https://downloadeasycv.simonit.dev")},
+$0:function(){S.a0n("https://easycv.page.link/download")},
 $S:0}
 K.m1.prototype={
 ar:function(){return new K.Km(C.p)}}
