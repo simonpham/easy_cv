@@ -4,6 +4,8 @@ import 'package:easy_cv/interfaces/dsc_portal_api_interface.dart';
 import 'package:easy_cv/models/dsc_user.dart';
 import 'package:easy_cv/models/story.dart';
 import 'package:easy_cv/singleton_instances.dart';
+import 'package:easy_cv/ui/pages/story_edit_page.dart';
+import 'package:easy_cv/utils/extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DscPortalApiService implements InterfaceDscPortalApi {
@@ -102,6 +104,7 @@ class DscPortalApiService implements InterfaceDscPortalApi {
           school.toMap(),
           merge: true,
         );
+    return true;
   }
 
   @override
@@ -113,6 +116,7 @@ class DscPortalApiService implements InterfaceDscPortalApi {
           company.toMap(),
           merge: true,
         );
+    return true;
   }
 
   @override
@@ -120,6 +124,7 @@ class DscPortalApiService implements InterfaceDscPortalApi {
     await firestore.collection("users/${user.uid}/education").add(
           school.toMap(),
         );
+    return true;
   }
 
   @override
@@ -127,6 +132,20 @@ class DscPortalApiService implements InterfaceDscPortalApi {
     await firestore.collection("users/${user.uid}/experience").add(
           company.toMap(),
         );
+    return true;
+  }
+
+  @override
+  Future<bool> deleteStory(
+      DscUser user, Story story, StoryType storyType) async {
+    final pathPostFix = (storyType == StoryType.company).ifTrue(
+      "experience",
+      "education",
+    );
+    await firestore
+        .document("users/${user.uid}/$pathPostFix/${story.id}")
+        .delete();
+    return true;
   }
 
   @override

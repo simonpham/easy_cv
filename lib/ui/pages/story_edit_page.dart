@@ -31,15 +31,30 @@ class StoryEditPage extends StatelessWidget {
             appBar: AppBar(
               elevation: 0.0,
               backgroundColor: Colors.transparent,
-              title: Text(type == StoryType.school ? "School" : "Workplace"),
-              actions: <Widget>[
-                FlatButton(
-                  colorBrightness: Brightness.dark,
-                  onPressed: () => _handleSaveButtonPressed(context, model),
-                  disabledTextColor: Colors.white38,
-                  child: Text("Save"),
-                ),
-              ],
+              title: Row(
+                children: <Widget>[
+                  Text(type == StoryType.school ? "School" : "Workplace")
+                      .expand(),
+                  Row(
+                    children: <Widget>[
+                      (model.id != null && model.id.isNotEmpty).ifTrue(
+                        Tappable(
+                          onTap: () => _handleDeleteButtonPressed(context, model),
+                          child: Icon(
+                            Icons.delete,
+                          ).addPadding(),
+                        ),
+                      ),
+                      Tappable(
+                        onTap: () => _handleSaveButtonPressed(context, model),
+                        child: Icon(
+                          Icons.save,
+                        ).addPadding(),
+                      ).addMarginLeft(2),
+                    ],
+                  )
+                ],
+              ),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -152,8 +167,6 @@ class StoryEditPage extends StatelessWidget {
         textInputAction: TextInputAction.done,
         onEditingComplete: () async {
           context.hideKeyboard();
-//                    await _handleNextPage(context, model);
-//                    model.companyFocusNode.requestFocus();
         },
         controller: model.summaryTextController,
         decoration: InputDecoration(
@@ -435,41 +448,76 @@ class StoryEditPage extends StatelessWidget {
     ];
   }
 
+  _handleDeleteButtonPressed(
+      BuildContext context, StoryEditViewModel model) async {
+    context.showAlertDialog(
+        message:
+            "Are you sure you want to delete this? This action can't be undone.",
+        yesAction: () async {
+          if (await profileModel.deleteStory(
+                  (type == StoryType.school).ifTrue(
+                    model.exportSchool(),
+                    model.exportCompany(),
+                  ),
+                  type) ==
+              true) {
+            Fluttertoast.showToast(
+              msg: "Deleted successfully!",
+              backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+              textColor: Colors.white,
+            );
+            context.pop();
+            context.navigator.pushReplacement(HomePage().route(context));
+            return;
+          }
+
+          Fluttertoast.showToast(
+            msg: "Failed!",
+            backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+            textColor: Colors.white,
+          );
+        });
+  }
+
   _handleSaveButtonPressed(
       BuildContext context, StoryEditViewModel model) async {
-    if (type == StoryType.school) {
-      final school = model.exportSchool();
-      if (await profileModel.updateSchool(school) == true) {
-        Fluttertoast.showToast(
-          msg: "Added successfully!",
-          backgroundColor: context.theme.primaryColor.withOpacity(0.9),
-          textColor: Colors.white,
-        );
-        context.navigator.popUntil((route) => !route.navigator.canPop());
-        context.navigator.pushReplacement(HomePage().route(context));
-        return;
-      }
-    }
+    context.showAlertDialog(
+        message: "Are you sure you want to save?",
+        yesAction: () async {
+          if (type == StoryType.school) {
+            final school = model.exportSchool();
+            if (await profileModel.updateSchool(school) == true) {
+              Fluttertoast.showToast(
+                msg: "Added successfully!",
+                backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+                textColor: Colors.white,
+              );
+              context.navigator.popUntil((route) => !route.navigator.canPop());
+              context.navigator.pushReplacement(HomePage().route(context));
+              return;
+            }
+          }
 
-    if (type == StoryType.company) {
-      final company = model.exportCompany();
-      if (await profileModel.updateCompany(company) == true) {
-        Fluttertoast.showToast(
-          msg: "Edited successfully!",
-          backgroundColor: context.theme.primaryColor.withOpacity(0.9),
-          textColor: Colors.white,
-        );
-        context.navigator.popUntil((route) => !route.navigator.canPop());
-        context.navigator.pushReplacement(HomePage().route(context));
-        return;
-      }
-    }
+          if (type == StoryType.company) {
+            final company = model.exportCompany();
+            if (await profileModel.updateCompany(company) == true) {
+              Fluttertoast.showToast(
+                msg: "Edited successfully!",
+                backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+                textColor: Colors.white,
+              );
+              context.navigator.popUntil((route) => !route.navigator.canPop());
+              context.navigator.pushReplacement(HomePage().route(context));
+              return;
+            }
+          }
 
-    Fluttertoast.showToast(
-      msg: "Failed!",
-      backgroundColor: context.theme.primaryColor.withOpacity(0.9),
-      textColor: Colors.white,
-    );
+          Fluttertoast.showToast(
+            msg: "Failed!",
+            backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+            textColor: Colors.white,
+          );
+        });
   }
 }
 

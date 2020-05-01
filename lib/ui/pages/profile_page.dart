@@ -69,6 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
     final cvUrl = "https://easycv.simonit.dev/#/${model.user.username}";
     return AppBar(
+      automaticallyImplyLeading: false,
       title: Column(
         children: <Widget>[
           Text(
@@ -226,6 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: context.theme.primaryColor.withOpacity(0.87),
             fontWeight: FontWeight.w400,
           ),
+          textAlign: TextAlign.center,
         )
             .wrapEditor(context, model, ProfileEnum.bio, isNotLoggedIn)
             .addMarginTop(),

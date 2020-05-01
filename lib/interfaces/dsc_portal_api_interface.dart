@@ -1,5 +1,6 @@
 import 'package:easy_cv/models/dsc_user.dart';
 import 'package:easy_cv/models/story.dart';
+import 'package:easy_cv/ui/pages/story_edit_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class InterfaceDscPortalApi {
@@ -32,6 +33,8 @@ abstract class InterfaceDscPortalApi {
   Future<bool> addSchool(DscUser user, Story school);
 
   Future<bool> addCompany(DscUser user, Story company);
+
+  Future<bool> deleteStory(DscUser user, Story story, StoryType storyType);
 
   Future<List<Story>> getUserExperience(String uid);
 

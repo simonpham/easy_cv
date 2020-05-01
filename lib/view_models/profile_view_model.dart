@@ -2,6 +2,7 @@ import 'package:easy_cv/models/dsc_user.dart';
 import 'package:easy_cv/models/story.dart';
 import 'package:easy_cv/services/dsc_portal_api_service.dart';
 import 'package:easy_cv/singleton_instances.dart';
+import 'package:easy_cv/ui/pages/story_edit_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -142,6 +143,23 @@ class ProfileViewModel extends Model {
           experience.insert(0, company);
           notifyListeners();
         }
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  Future<bool> deleteStory(Story story, StoryType storyType) async {
+    try {
+      final success = await apiSvc?.deleteStory(user, story, storyType);
+      if (success == true) {
+        if (storyType == StoryType.company) {
+          experience.removeWhere((item) => story.id == item.id);
+        } else {
+          education.removeWhere((item) => story.id == item.id);
+        }
+        notifyListeners();
       }
       return true;
     } catch (error) {

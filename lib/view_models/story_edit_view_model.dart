@@ -224,7 +224,18 @@ class StoryEditViewModel extends Model {
     notifyListeners();
   }
 
+  /// End date
+  String _id;
+
+  String get id => _id;
+
+  set id(String value) {
+    _id = value;
+    notifyListeners();
+  }
+
   void reset({
+    String id,
     String location,
     String school,
     String major,
@@ -235,6 +246,8 @@ class StoryEditViewModel extends Model {
     int startDate,
     int endDate,
   }) {
+    this.id = id ?? "";
+
     locationTextController = TextEditingController(text: location ?? "");
     locationFocusNode = FocusNode();
     this.location = location ?? "";
@@ -270,6 +283,7 @@ class StoryEditViewModel extends Model {
 
   void initSchool(Story story) {
     reset(
+      id: story.id,
       location: story.location,
       school: story.company,
       major: story.title,
@@ -281,6 +295,7 @@ class StoryEditViewModel extends Model {
 
   void initCompany(Story story) {
     reset(
+      id: story.id,
       location: story.location,
       company: story.company,
       position: story.title,
@@ -292,6 +307,7 @@ class StoryEditViewModel extends Model {
 
   Story exportSchool() {
     return Story(
+      id: id,
       location: location,
       company: school,
       title: major,
@@ -303,6 +319,7 @@ class StoryEditViewModel extends Model {
 
   Story exportCompany() {
     return Story(
+      id: id,
       location: companyLocation,
       company: company,
       title: position,
