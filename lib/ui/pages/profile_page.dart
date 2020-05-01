@@ -72,21 +72,31 @@ class _ProfilePageState extends State<ProfilePage> {
       automaticallyImplyLeading: false,
       title: Column(
         children: <Widget>[
-          Text(
-            "Your profile is public at:",
-            style: context.textTheme.subtitle1.copyWith(
-              color: Colors.white.withOpacity(0.6),
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
-            ),
+          Row(
+            children: <Widget>[
+              Text(
+                "Your profile is public at:",
+                style: context.textTheme.subtitle1.copyWith(
+                  color: Colors.white.withOpacity(0.6),
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.left,
+              ).expand(),
+            ],
           ),
-          Text(
-            cvUrl,
-            style: context.textTheme.subtitle1.copyWith(
-              color: Colors.white.withOpacity(0.87),
-              fontSize: 14.0,
-            ),
-          ).addPaddingVertical()
+          Row(
+            children: <Widget>[
+              Text(
+                cvUrl,
+                style: context.textTheme.subtitle1.copyWith(
+                  color: Colors.white.withOpacity(0.87),
+                  fontSize: 14.0,
+                ),
+                textAlign: TextAlign.left,
+              ).expand(),
+            ],
+          ).addPaddingVertical(),
         ],
       ),
       actions: <Widget>[
