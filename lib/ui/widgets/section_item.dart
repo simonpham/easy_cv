@@ -47,13 +47,7 @@ class SectionItem extends StatelessWidget {
               _buildLabel(context),
             ],
           ),
-          Row(
-            children: <Widget>[]
-              ..addAll(_buildCompany(context))
-              ..addAll(_buildLocation(context))
-              ..add(_buildSpacer())
-              ..addAll(_buildDates(context)),
-          ).addMarginTop(),
+          _buildDetail(context),
           _buildSummary(context),
         ],
       ).addPaddingVertical(3),
@@ -147,18 +141,12 @@ class SectionItem extends StatelessWidget {
       return [];
     }
 
-    String formatter;
-    try {
-      if (Platform.isAndroid || Platform.isIOS) {
-        formatter = "MM/yyyy";
-      }
-    } catch (_) {}
-    String date = "$startDate".toDate(formatter);
+    String date = "$startDate".toDate();
     if (isCurrent == true) {
       date = "$date - Now";
     } else {
       if (endDate != null) {
-        date = "$date - ${endDate.toString().toDate(formatter)}";
+        date = "$date - ${endDate.toString().toDate()}";
       }
     }
     return [
@@ -166,7 +154,7 @@ class SectionItem extends StatelessWidget {
         Icons.calendar_today,
         color: context.theme.unselectedWidgetColor.withOpacity(0.45),
         size: 20,
-      ).addMarginLeft(),
+      ),
       Text(
         date ?? "",
         style: context.textTheme.subtitle2.copyWith(
@@ -191,6 +179,33 @@ class SectionItem extends StatelessWidget {
           ),
         ).expand(),
       ],
+    ).addMarginTop();
+  }
+
+  _buildDetail(BuildContext context) {
+    try {
+      if (Platform.isAndroid || Platform.isIOS) {
+        return Column(
+          children: <Widget>[
+            Row(
+                children: <Widget>[]
+                  ..addAll(_buildCompany(context))
+                  ..addAll(_buildLocation(context))),
+            Row(
+              children: <Widget>[]..addAll(
+                  _buildDates(context),
+                ),
+            ).addMarginTop(),
+          ],
+        ).addMarginTop();
+      }
+    } catch (err) {}
+    return Row(
+      children: <Widget>[]
+        ..addAll(_buildCompany(context))
+        ..addAll(_buildLocation(context))
+        ..add(_buildSpacer())
+        ..addAll(_buildDates(context)),
     ).addMarginTop();
   }
 }

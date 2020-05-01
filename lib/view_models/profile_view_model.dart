@@ -1,6 +1,7 @@
 import 'package:easy_cv/models/dsc_user.dart';
 import 'package:easy_cv/models/story.dart';
 import 'package:easy_cv/services/dsc_portal_api_service.dart';
+import 'package:easy_cv/singleton_instances.dart';
 import 'package:flutter/foundation.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -34,6 +35,15 @@ class ProfileViewModel extends Model {
   set education(List<Story> value) {
     _education = value;
     notifyListeners();
+  }
+
+  Future<String> refreshAvatarLink() async {
+    final ref = firebaseStorage.ref().child("profile_photos/${user.uid}");
+    final url = await ref.getDownloadURL();
+    user.profilePicUrl = url;
+    await this.updateProfile();
+    notifyListeners();
+    return url;
   }
 
   Future<bool> loadProfile([String username]) async {

@@ -12,6 +12,7 @@ import 'package:easy_cv/view_models/app_view_model.dart';
 import 'package:easy_cv/view_models/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:share/share.dart';
@@ -36,6 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     final username = widget.profileName ?? widget.viewModel?.user?.uid;
     profileViewModel.loadProfile(username).then((_) {
+      profileViewModel.refreshAvatarLink();
       profileViewModel.loadExperience();
       profileViewModel.loadEducation();
     });
@@ -401,12 +403,50 @@ extension WidgetExtension on Widget {
               ).route(context),
             );
             break;
+          case ProfileEnum.avatar:
+            _handleAvatarEdit(context, model);
+            break;
           default:
             break;
         }
       },
       child: this,
     );
+  }
+
+  _handleAvatarEdit(BuildContext context, ProfileViewModel model) async {
+    try {
+      await ImagePicker.pickImage(source: ImageSource.gallery).then((file) {
+        Fluttertoast.showToast(
+          msg: "Uploading photo...",
+          gravity: ToastGravity.CENTER,
+          backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+          textColor: Colors.white,
+        );
+        firebaseStorage
+            .ref()
+            .child("profile_photos/${model.user.uid}")
+            .putFile(file)
+            .onComplete
+            .then((value) {
+          value.ref.getDownloadURL().then((url) {
+            final user = model.user;
+            user.profilePicUrl = url;
+            model.user = user;
+            model.updateProfile();
+          });
+        });
+      }, onError: (error) {
+        Fluttertoast.showToast(
+          msg: "Cannot select file!",
+          gravity: ToastGravity.CENTER,
+          backgroundColor: context.theme.primaryColor.withOpacity(0.9),
+          textColor: Colors.white,
+        );
+      });
+    } catch (error) {
+      print(error);
+    }
   }
 }
 

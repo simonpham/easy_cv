@@ -5,6 +5,7 @@ import 'package:easy_cv/view_models/begin_view_model.dart';
 import 'package:easy_cv/view_models/profile_view_model.dart';
 import 'package:easy_cv/view_models/story_edit_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 final _chatApiService = DscPortalApiService();
 
@@ -15,3 +16,5 @@ final storyEditViewModel = StoryEditViewModel();
 
 final firebaseAuth = FirebaseAuth.instance;
 final firestore = Firestore.instance;
+final firebaseStorage = FirebaseStorage.instance;
+

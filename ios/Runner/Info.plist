@@ -4,7 +4,7 @@
 <dict>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To access camera</string>
-	<key>NSAppleMusicUsageDescription</key>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Select photo to upload as profile photo</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Capture photo to upload as profile photo</string>
