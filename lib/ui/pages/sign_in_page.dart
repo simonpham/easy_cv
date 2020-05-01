@@ -1,6 +1,6 @@
 import 'package:easy_cv/constants/strings.dart';
+import 'package:easy_cv/main.dart';
 import 'package:easy_cv/singleton_instances.dart';
-import 'package:easy_cv/ui/pages/home_page.dart';
 import 'package:easy_cv/ui/widgets/auth_hint.dart';
 import 'package:easy_cv/ui/widgets/loading_indicator.dart';
 import 'package:easy_cv/ui/widgets/logo.dart';
@@ -152,9 +152,7 @@ class _SignInPageState extends State<SignInPage> {
       resetButtonState();
     });
     if (result) {
-      context.navigator.pushReplacement(
-        HomePage().route(context),
-      );
+      EasyCv.restartApp(context);
     }
   }
 
