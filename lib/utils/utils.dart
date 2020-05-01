@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_cv/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -9,4 +11,13 @@ BoxDecoration getTopDividerDecoration(BuildContext context) {
       ),
     ),
   );
+}
+
+bool isMobile() {
+  try {
+    if (Platform.isAndroid || Platform.isIOS) {
+      return true;
+    }
+  } catch (err) {}
+  return false;
 }
