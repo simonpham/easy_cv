@@ -296,7 +296,7 @@ class StoryEditViewModel extends Model {
   void initCompany(Story story) {
     reset(
       id: story.id,
-      location: story.location,
+      companyLocation: story.location,
       company: story.company,
       position: story.title,
       summary: story.summary,
