@@ -64,7 +64,7 @@ class LandingPage extends StatelessWidget {
             onTap: () {},
             child: RaisedButton(
               onPressed: () {
-                "https://downloadeasycv.simonit.dev".launch();
+                "https://easycv.page.link/download".launch();
               },
               child: Text(
                 "DOWNLOAD APK",
